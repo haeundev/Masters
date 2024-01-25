@@ -26,8 +26,6 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _EMISSION
-  - _GLOSSINESS_FROM_BASE_ALPHA
-  - _SPECULAR_COLOR
   m_InvalidKeywords: []
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -107,7 +105,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.41176465, g: 0.41176465, b: 0.41176465, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.41176462, g: 0.41176462, b: 0.41176462, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
