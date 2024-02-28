@@ -1,22 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+﻿using UnityEngine;
 using UnityEngine.XR;
 
 public class KartControllerVRInput : MonoBehaviour
 {
-    [Header("Speed")]
-    public float speedThreshold = 0.7f;
+    [Header("Speed")] public float speedThreshold = 0.7f;
     public XRNode speedXrNode = XRNode.RightHand;
 
-    [Header("Drift")]
-    public float driftThreshold = 0.7f;
+    [Header("Drift")] public float driftThreshold = 0.7f;
     public XRNode driftXRNode = XRNode.LeftHand;
 
-    [Header("Turn")]
-   
-    public HingeJoint wheel;
+    [Header("Turn")] public HingeJoint wheel;
+    public float turnAmount = 1f;
     public float maxValue = 0.35f;
     public float minValue = -0.35f;
     public float turnThreshold = 0.2f;
@@ -24,50 +18,38 @@ public class KartControllerVRInput : MonoBehaviour
     private KartController KartController;
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
         KartController = GetComponent<KartController>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Speed Input
-        if(Input.GetKey(KeyCode.UpArrow) || (InputDevices.GetDeviceAtXRNode(speedXrNode).TryGetFeatureValue(CommonUsages.trigger, out float v) && v > speedThreshold))
-        {
+        if (Input.GetKey(KeyCode.UpArrow) ||
+            (InputDevices.GetDeviceAtXRNode(speedXrNode).TryGetFeatureValue(CommonUsages.trigger, out var v) &&
+             v > speedThreshold))
             KartController.speedInput = true;
-        }
         else
-        {
             KartController.speedInput = false;
-        }
 
         //Drift Input
-        if (Input.GetKey(KeyCode.Space) || (InputDevices.GetDeviceAtXRNode(driftXRNode).TryGetFeatureValue(CommonUsages.trigger, out float g) && g > driftThreshold))
-        {
+        if (Input.GetKey(KeyCode.Space) ||
+            (InputDevices.GetDeviceAtXRNode(driftXRNode).TryGetFeatureValue(CommonUsages.trigger, out var g) &&
+             g > driftThreshold))
             KartController.driftInput = true;
-        }
         else
-        {
             KartController.driftInput = false;
-        }
 
         //Turn Input
-        float steeringNormal = Mathf.InverseLerp(minValue, maxValue, wheel.transform.localRotation.x);
-        float steeringRange = Mathf.Lerp(-1, 1, steeringNormal);
-        if (Mathf.Abs(steeringRange) < turnThreshold)
-        {
-            steeringRange = 0;
-        }
-       
-        if(steeringRange == 0)
-        {
-            KartController.turnInput = -Input.GetAxis("Horizontal");
-        }
+        var steeringNormal = Mathf.InverseLerp(minValue, maxValue, wheel.transform.localRotation.x);
+        var steeringRange = Mathf.Lerp(-1, 1, steeringNormal);
+        if (Mathf.Abs(steeringRange) < turnThreshold) steeringRange = 0;
+
+        if (steeringRange == 0)
+            KartController.turnInput = -Input.GetAxis("Horizontal") * turnAmount;
         else
-        {
-            KartController.turnInput = -steeringRange;
-        }
-        
+            KartController.turnInput = -steeringRange * turnAmount;
     }
 }
