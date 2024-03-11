@@ -34,6 +34,8 @@ public class GameController : MonoBehaviour
     {
         _isLookAtSet = false;
         
+        Destroy(target);
+        
         Debug.Log($"Stimuli triggered: {info.Contrast} - {answer}");
     }
 
@@ -52,7 +54,7 @@ public class GameController : MonoBehaviour
         
         _kartController.transform.position = Vector3.MoveTowards(_kartController.transform.position, targetPosition, speed * Time.deltaTime); // Move towards the target
         
-        //Debug.Log($"Moving towards target: {currentTarget.name}");
+        Debug.Log($"Moving towards target: {currentTarget.name}");
         
 // Calculate the target direction
         Vector3 targetDirection = new Vector3(targetPosition.x, _kartController.transform.position.y, targetPosition.z) - _kartController.transform.position;
