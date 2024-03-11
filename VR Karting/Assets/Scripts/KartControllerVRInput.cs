@@ -16,23 +16,32 @@ public class KartControllerVRInput : MonoBehaviour
     public float turnThreshold = 0.2f;
 
     private KartController KartController;
+    private GameController _gameController;
 
     // Start is called before the first frame update
     private void Awake()
     {
         KartController = GetComponent<KartController>();
+        _gameController = FindObjectOfType<GameController>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        //Speed Input
-        if (Input.GetKey(KeyCode.UpArrow) ||
-            (InputDevices.GetDeviceAtXRNode(speedXrNode).TryGetFeatureValue(CommonUsages.trigger, out var v) &&
-             v > speedThreshold))
+        if (_gameController.isAutoDrive)
+        {
             KartController.speedInput = true;
+        }
         else
-            KartController.speedInput = false;
+        {
+            //Speed Input
+            if (Input.GetKey(KeyCode.UpArrow) ||
+                (InputDevices.GetDeviceAtXRNode(speedXrNode).TryGetFeatureValue(CommonUsages.trigger, out var v) &&
+                 v > speedThreshold))
+                KartController.speedInput = true;
+            else
+                KartController.speedInput = false;
+        }
 
         //Drift Input
         if (Input.GetKey(KeyCode.Space) ||
