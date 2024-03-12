@@ -1,81 +1,123 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DataTables;
+using LiveLarson.Util;
+using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField] public bool isAutoDrive = true;
+    [SerializeField] public float speed = 1f;
     private bool _isLookAtSet;
     private Transform _lookAt;
-    private ItemSpawner _itemSpawner;
-    private int _currentTargetIndex;
+    private StimuliSpawner _stimuliSpawner;
     private List<Item> _items;
     private KartController _kartController;
     
-    public List<Transform> targets; // List of targets to move towards
-    public float speed = 1f; // Movement speed
-    private int currentTargetIndex = 0; // Index of the current target in the list
+    private List<Transform> stimulis; // List of targets to move towards
+    private int _currentTargetIndex = 0; // Index of the current target in the list
+    
+    [SerializeField] private TextMeshProUGUI optionA;
+    [SerializeField] private TextMeshProUGUI optionB;
     
 
     private void Awake()
     {
         _kartController = FindObjectOfType<KartController>();
-        _itemSpawner = FindObjectOfType<ItemSpawner>();
+        _stimuliSpawner = FindObjectOfType<StimuliSpawner>();
         GameEvents.OnStimuliTriggered += OnStimuliTriggered;
     }
 
     private void Start()
     {
-        targets = _itemSpawner.transform.GetComponentsInChildren<Item>().Select(p => p.transform).ToList();
+        stimulis = _stimuliSpawner.transform.GetComponentsInChildren<StimuliObject>().Select(p => p.transform).ToList();
+        Debug.Log($"Total targets: {stimulis.Count}");
+        
+        optionA.text = "";
+        optionB.text = "";
+    }
+    
+    [Button]
+    public void SetSpeed()
+    {
+        _kartController.acceleration *= speed;
     }
 
     private void OnStimuliTriggered(GameObject target, Stimuli info, string answer)
     {
         _isLookAtSet = false;
         
+        SetDisplayedInfo(info);
+        
         Destroy(target);
         
         Debug.Log($"Stimuli triggered: {info.Contrast} - {answer}");
     }
 
-    void Update()
+    private void Update()
     {
         MoveTowardsTarget();
     }
 
-    void MoveTowardsTarget()
+    private bool _isEnded;
+
+    private void MoveTowardsTarget()
     {
-        if (targets.Count == 0)
-            return; // No targets to move towards
-
-        Transform currentTarget = targets[currentTargetIndex];
-        Vector3 targetPosition = new Vector3(currentTarget.position.x, _kartController.transform.position.y, currentTarget.position.z); // Target position on the X and Z axes, Y axis is ignored
+        if (stimulis.Count == 0 || _isEnded)
+            return;
         
-        _kartController.transform.position = Vector3.MoveTowards(_kartController.transform.position, targetPosition, speed * Time.deltaTime); // Move towards the target
-        
-        Debug.Log($"Moving towards target: {currentTarget.name}");
-        
-// Calculate the target direction
-        Vector3 targetDirection = new Vector3(targetPosition.x, _kartController.transform.position.y, targetPosition.z) - _kartController.transform.position;
-// Normalize the target direction
-        targetDirection.Normalize();
-
-// Determine the new forward direction by interpolating between the current forward direction and the target direction
-        Vector3 newForward = Vector3.Lerp(_kartController.transform.forward, targetDirection, Time.deltaTime * 3f);
-
-// Apply the new forward direction to the kart
-        _kartController.transform.forward = newForward;        
-        
-        // Check if the object has reached the target
-        if (Vector3.Distance(_kartController.transform.position, targetPosition) < 2f) // Adjust the 0.1f value to specify when the target is considered "reached"
+        // check index
+        if (_currentTargetIndex >= stimulis.Count)
         {
-            currentTargetIndex++; // Move on to the next target
-            Debug.Log("Target reached");
-            if (currentTargetIndex >= targets.Count) // If there are no more targets, you can loop or stop
-            {
-                currentTargetIndex = 0; // Loop to the first target again or implement another behavior
-            }
+            Debug.Log("No more targets to move towards");
+            _isEnded = true;
+            StartCoroutine(OnEnded());
+            return;
         }
+        
+        var currentTarget = stimulis[_currentTargetIndex];
+        var kartPos = _kartController.transform.position;
+        var targetPos = currentTarget.position;
+        var targetPosition = new Vector3(targetPos.x, kartPos.y, targetPos.z); // Target position on the X and Z axes, Y axis is ignored
+        
+        if (isAutoDrive) // auto rotate
+        {
+            var targetDirection = new Vector3(targetPosition.x, kartPos.y, targetPosition.z) - kartPos;
+            targetDirection.Normalize();
+            var newForward = Vector3.Lerp(_kartController.transform.forward, targetDirection, Time.deltaTime * 3f);
+            _kartController.transform.forward = newForward;
+        }
+        
+        // Move on to the next target
+        if (Vector3.Distance(_kartController.transform.position, targetPosition) < 2f)
+        {
+            _currentTargetIndex++;
+            
+            if (_currentTargetIndex >= stimulis.Count)
+            {
+                _isEnded = true;
+                return;
+            }
+            
+            Debug.Log("Target reached. Next target: " + stimulis[_currentTargetIndex].name);
+        }
+    }
+
+    private void SetDisplayedInfo(Stimuli info)
+    {
+        optionA.text = $"{info.A}";
+        optionB.text = $"{info.B}";
+    }
+
+    private IEnumerator OnEnded()
+    {
+        Debug.Log("Game ended");
+
+        yield return YieldInstructionCache.WaitForSeconds(5f);
+        
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 }

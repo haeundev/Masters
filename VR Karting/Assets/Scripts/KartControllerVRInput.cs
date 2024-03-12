@@ -28,20 +28,22 @@ public class KartControllerVRInput : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (_gameController.isAutoDrive)
-        {
-            KartController.speedInput = true;
-        }
-        else
-        {
-            //Speed Input
-            if (Input.GetKey(KeyCode.UpArrow) ||
-                (InputDevices.GetDeviceAtXRNode(speedXrNode).TryGetFeatureValue(CommonUsages.trigger, out var v) &&
-                 v > speedThreshold))
-                KartController.speedInput = true;
-            else
-                KartController.speedInput = false;
-        }
+        KartController.speedInput = true;
+        
+        // if (_gameController.isAutoDrive)
+        // {
+        //     KartController.speedInput = true;
+        // }
+        // else
+        // {
+        //     //Speed Input
+        //     if (Input.GetKey(KeyCode.UpArrow) ||
+        //         (InputDevices.GetDeviceAtXRNode(speedXrNode).TryGetFeatureValue(CommonUsages.trigger, out var v) &&
+        //          v > speedThreshold))
+        //         KartController.speedInput = true;
+        //     else
+        //         KartController.speedInput = false;
+        // }
 
         //Drift Input
         if (Input.GetKey(KeyCode.Space) ||
