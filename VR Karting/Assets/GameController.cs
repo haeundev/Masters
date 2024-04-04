@@ -10,6 +10,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     [SerializeField] public bool isAutoDrive = true;
+    [SerializeField] public EnvironmentController environmentController;
     [SerializeField] public float speed = 1f;
     private bool _isLookAtSet;
     private Transform _lookAt;
@@ -38,6 +39,8 @@ public class GameController : MonoBehaviour
         
         optionA.text = "";
         optionB.text = "";
+        
+        environmentController.SetRandomEnvironment();
     }
     
     [Button]
