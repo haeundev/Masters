@@ -6,6 +6,8 @@ using LiveLarson.Util;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using Util.Extensions;
 
 public class GameController : MonoBehaviour
 {
@@ -15,14 +17,16 @@ public class GameController : MonoBehaviour
     private bool _isLookAtSet;
     private Transform _lookAt;
     private StimuliSpawner _stimuliSpawner;
-    private List<Item> _items;
+    private List<FoodItem> _items;
     private KartController _kartController;
     
     private List<Transform> stimulis; // List of targets to move towards
     private int _currentTargetIndex = 0; // Index of the current target in the list
     
-    [SerializeField] private TextMeshProUGUI optionA;
-    [SerializeField] private TextMeshProUGUI optionB;
+    [SerializeField] private Button buttonA;
+    [SerializeField] private Button buttonB;
+    [SerializeField] private TextMeshProUGUI textA;
+    [SerializeField] private TextMeshProUGUI textB;
     
 
     private void Awake()
@@ -36,9 +40,11 @@ public class GameController : MonoBehaviour
     {
         stimulis = _stimuliSpawner.transform.GetComponentsInChildren<StimuliObject>().Select(p => p.transform).ToList();
         Debug.Log($"Total targets: {stimulis.Count}");
-        
-        optionA.text = "";
-        optionB.text = "";
+
+        textA.transform.parent.localScale = Vector3.zero;
+        textB.transform.parent.localScale = Vector3.zero;
+        textA.text = "";
+        textB.text = "";
         
         environmentController.SetRandomEnvironment();
     }
@@ -55,6 +61,9 @@ public class GameController : MonoBehaviour
         
         SetDisplayedInfo(info);
         
+        textA.transform.parent.DoScale();
+        textB.transform.parent.DoScale();
+        
         Destroy(target);
         
         Debug.Log($"Stimuli triggered: {info.Contrast} - {answer}");
@@ -62,7 +71,8 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        MoveTowardsTarget();
+        if (isAutoDrive)
+            MoveTowardsTarget();
     }
 
     private bool _isEnded;
@@ -111,8 +121,8 @@ public class GameController : MonoBehaviour
 
     private void SetDisplayedInfo(Stimuli info)
     {
-        optionA.text = $"{info.A}";
-        optionB.text = $"{info.B}";
+        textA.text = $"{info.A}";
+        textB.text = $"{info.B}";
     }
 
     private IEnumerator OnEnded()

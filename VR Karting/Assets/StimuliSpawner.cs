@@ -40,21 +40,29 @@ public class StimuliSpawner : MonoBehaviour
         // var data = Extensions.MergeLists(firstHalf, secondHalf);
         var data = stimuliSO.Values;
 
-        var spawnCount = sessionCount * data.Count;
+        var index = 0;
 
-        for (var i = 0; i < spawnCount; i++)
+        var initialDistance = totalDistance / 2; // 맵에 뒤에 더 추가해놓긴 했는데 그건 스페어로 사용.
+        
+        for (var i = 0; i < sessionCount; i++)
         {
-            var stimuli = Instantiate(stimuliPrefab, transform);
-            var parentPos = transform.position;
-            stimuli.transform.position = new Vector3(
-                parentPos.x + Random.Range(-randomX, randomX),
-                parentPos.y,
-                parentPos.z + i * (totalDistance / spawnCount));
+            for (var j = 0; j < data.Count; j++)
+            {
+                var stimuli = Instantiate(stimuliPrefab, transform);
+                var parentPos = transform.position;
+                stimuli.transform.position = new Vector3(
+                    parentPos.x + Random.Range(-randomX, randomX),
+                    parentPos.y,
+                    parentPos.z + index * (initialDistance / (data.Count * sessionCount)));
+                
+                var isOddTurnSession = i % 2 == 0;
+                var info = data[j];
+                stimuli.GetComponentInChildren<StimuliObject>().SetInfo(info, isOddTurnSession ? info.A : info.B);
 
-            stimuli.GetComponentInChildren<StimuliObject>()
-                .SetInfo(data[i % stimuliSO.Values.Count], i < stimuliSO.Values.Count / 2);
-
-            _spawnedItems.Add(stimuli);
+                _spawnedItems.Add(stimuli);
+                
+                index++;
+            }
         }
     }
 

@@ -15,16 +15,32 @@ MonoBehaviour:
   Values:
   - ID: 101
     Contrast: "\u026A vs. i\u02D0"
-    A: bit
-    B: beat
+    A: rich
+    B: reach
   - ID: 102
     Contrast: "\u026A vs. i\u02D0"
-    A: sit
-    B: seat
+    A: itch
+    B: each
   - ID: 103
     Contrast: "\u026A vs. i\u02D0"
-    A: fit
-    B: feet
+    A: sin
+    B: scene
+  - ID: 104
+    Contrast: "\u026A vs. i\u02D0"
+    A: list
+    B: least
+  - ID: 105
+    Contrast: "\u026A vs. i\u02D0"
+    A: chip
+    B: cheap
+  - ID: 106
+    Contrast: "\u026A vs. i\u02D0"
+    A: filled
+    B: field
+  - ID: 107
+    Contrast: "\u026A vs. i\u02D0"
+    A: grin
+    B: green
   - ID: 201
     Contrast: "\u025B vs. \xE6"
     A: bet
@@ -37,6 +53,22 @@ MonoBehaviour:
     Contrast: "\u025B vs. \xE6"
     A: met
     B: mat
+  - ID: 204
+    Contrast: "\u025B vs. \xE6"
+    A: set
+    B: sat
+  - ID: 205
+    Contrast: "\u025B vs. \xE6"
+    A: ten
+    B: tan
+  - ID: 206
+    Contrast: "\u025B vs. \xE6"
+    A: men
+    B: man
+  - ID: 207
+    Contrast: "\u025B vs. \xE6"
+    A: Ken
+    B: can
   - ID: 301
     Contrast: "\u028C vs. \u0251"
     A: cut
@@ -49,6 +81,22 @@ MonoBehaviour:
     Contrast: "\u028C vs. \u0251"
     A: hut
     B: hot
+  - ID: 304
+    Contrast: "\u028C vs. \u0251"
+    A: nut
+    B: not
+  - ID: 305
+    Contrast: "\u028C vs. \u0251"
+    A: sub
+    B: sob
+  - ID: 306
+    Contrast: "\u028C vs. \u0251"
+    A: fund
+    B: fond
+  - ID: 307
+    Contrast: "\u028C vs. \u0251"
+    A: pup
+    B: pop
   - ID: 401
     Contrast: "\u028A vs. u\u02D0"
     A: look
@@ -61,3 +109,19 @@ MonoBehaviour:
     Contrast: "\u028A vs. u\u02D0"
     A: full
     B: fool
+  - ID: 404
+    Contrast: "\u028A vs. u\u02D0"
+    A: hood
+    B: who'd
+  - ID: 405
+    Contrast: "\u028A vs. u\u02D0"
+    A: bull
+    B: Boole
+  - ID: 406
+    Contrast: "\u028A vs. u\u02D0"
+    A: could
+    B: cooed
+  - ID: 407
+    Contrast: "\u028A vs. u\u02D0"
+    A: would
+    B: wooed

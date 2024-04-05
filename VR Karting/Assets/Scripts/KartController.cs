@@ -66,7 +66,10 @@ public class KartController : MonoBehaviour
 
         //Accelerate
         if (speedInput)
+        {
             _speed = acceleration;
+            _currentSpeed = _speed;
+        }
 
         //Steer
         if (turnInput != 0)

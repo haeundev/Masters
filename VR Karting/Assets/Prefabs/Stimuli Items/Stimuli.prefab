@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4244017347379172266}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 40, y: 1, z: 1}
+  m_LocalScale: {x: 40, y: 1, z: 2.02}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5629481368651171071}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &560937744614012536
 MeshFilter:
@@ -128,6 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5629481368651171071}
   - component: {fileID: 8054808592956634209}
+  - component: {fileID: 4707172788827642629}
   m_Layer: 0
   m_Name: Stimuli
   m_TagString: Untagged
@@ -142,7 +143,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5941623870762889956}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -150,6 +150,7 @@ Transform:
   m_Children:
   - {fileID: 1164891256665641797}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8054808592956634209
 MonoBehaviour:
@@ -175,3 +176,24 @@ MonoBehaviour:
   - {fileID: 4324132397758572615, guid: 83ad5ba2c18764b42b2fb629d7619a9e, type: 3}
   - {fileID: 8305868844253570164, guid: 50ac75acb2cbc834f8dd25ec2675b03b, type: 3}
   - {fileID: 7784789408633318472, guid: baf2c7e8b01e4154187e6451ca440f2b, type: 3}
+--- !u!65 &4707172788827642629
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5941623870762889956}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
