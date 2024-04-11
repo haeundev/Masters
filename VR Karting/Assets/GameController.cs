@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DataTables;
+using DG.Tweening;
 using LiveLarson.Util;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -25,15 +26,23 @@ public class GameController : MonoBehaviour
     
     [SerializeField] private Button buttonA;
     [SerializeField] private Button buttonB;
+    [SerializeField] private TextMeshProUGUI instructionText;
     [SerializeField] private TextMeshProUGUI textA;
     [SerializeField] private TextMeshProUGUI textB;
     
+    private bool _isEnded;
+    private Stimuli _currentInfo;
+    private string _currentAnswer;
+    private bool _isWaitForResponse;
 
     private void Awake()
     {
         _kartController = FindObjectOfType<KartController>();
         _stimuliSpawner = FindObjectOfType<StimuliSpawner>();
         GameEvents.OnStimuliTriggered += OnStimuliTriggered;
+        
+        buttonA.onClick.AddListener(() => OnResponse("A"));
+        buttonB.onClick.AddListener(() => OnResponse("B"));
     }
 
     private void Start()
@@ -43,6 +52,7 @@ public class GameController : MonoBehaviour
 
         textA.transform.parent.localScale = Vector3.zero;
         textB.transform.parent.localScale = Vector3.zero;
+        instructionText.transform.localScale = Vector3.zero;
         textA.text = "";
         textB.text = "";
         
@@ -59,14 +69,55 @@ public class GameController : MonoBehaviour
     {
         _isLookAtSet = false;
         
-        SetDisplayedInfo(info);
+        _currentInfo = info;
+        _currentAnswer = answer;
+        
+        SetDisplayedInfo(_currentInfo);
         
         textA.transform.parent.DoScale();
         textB.transform.parent.DoScale();
+        instructionText.transform.DoScale();
         
         Destroy(target);
         
-        Debug.Log($"Stimuli triggered: {info.Contrast} - {answer}");
+        Debug.Log($"Stimuli triggered: {_currentInfo.Contrast} - {_currentAnswer}");
+        
+        BeginWaitForResponse();
+    }
+
+    private void BeginWaitForResponse()
+    {
+        _isWaitForResponse = true;
+    }
+
+    private void OnResponse(string response)
+    {
+        if (!_isWaitForResponse)
+            return;
+        
+        Debug.Log($"Response: {response}");
+        
+        if (textA.text == _currentAnswer && response == "A" ||
+            textB.text == _currentAnswer && response == "B")
+        {
+            Debug.Log("Correct!");
+            
+            GlobalInfo.Score++;
+            
+            FloatEffect.Play(true);
+        }
+        else
+        {
+            Debug.Log("Incorrect!");
+            
+            FloatEffect.Play(false);
+        }
+        
+        _isWaitForResponse = false;
+
+        buttonA.transform.DOScale(Vector3.zero, 0.3f);
+        buttonB.transform.DOScale(Vector3.zero, 0.3f);
+        instructionText.transform.DOScale(Vector3.zero, 0.3f);
     }
 
     private void Update()
@@ -74,8 +125,6 @@ public class GameController : MonoBehaviour
         if (isAutoDrive)
             MoveTowardsTarget();
     }
-
-    private bool _isEnded;
 
     private void MoveTowardsTarget()
     {
@@ -131,6 +180,6 @@ public class GameController : MonoBehaviour
 
         yield return YieldInstructionCache.WaitForSeconds(5f);
         
-        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
     }
 }

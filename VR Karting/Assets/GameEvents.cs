@@ -5,15 +5,15 @@ using UnityEngine;
 public static class GameEvents
 {
     public static event Action<GameObject, Stimuli, string> OnStimuliTriggered;
-    public static event Action OnScoreTriggered;
+    public static event Action<int> OnScoreUpdate;
 
-    public static void TriggerStimuli(GameObject lookAt, Stimuli stimuliInfo, string stimuliInfoA)
+    public static void TriggerStimuli(GameObject lookAt, Stimuli stimuliInfo, string word)
     {
-        OnStimuliTriggered?.Invoke(lookAt, stimuliInfo, stimuliInfoA);
+        OnStimuliTriggered?.Invoke(lookAt, stimuliInfo, word);
     }
 
-    public static void TriggerScore()
+    public static void TriggerScoreUpdate(int score)
     {
-        OnScoreTriggered?.Invoke();
+        OnScoreUpdate?.Invoke(score);
     }
 }

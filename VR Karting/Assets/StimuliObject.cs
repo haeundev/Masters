@@ -29,7 +29,6 @@ public class StimuliObject : MonoBehaviour
     private void AddScore()
     {
         GlobalInfo.Score++;
-        GameEvents.TriggerScore();
     }
 
     private void OnDestroy()
@@ -56,6 +55,6 @@ public class StimuliObject : MonoBehaviour
         GlobalInfo.CurrentStimuli = _info;
         GlobalInfo.CurrentAnswer = _answer;
         
-        GameEvents.TriggerStimuli(gameObject, _info, $"Audio/{_answer}");
+        GameEvents.TriggerStimuli(gameObject, _info, _answer);
     }
 }

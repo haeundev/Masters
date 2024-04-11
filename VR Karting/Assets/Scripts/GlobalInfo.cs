@@ -7,5 +7,15 @@ public static class GlobalInfo
 
     public static Stimuli CurrentStimuli;
     public static string CurrentAnswer;
-    public static int Score { get; set; }
+    private static int score;
+
+    public static int Score
+    {
+        get => score;
+        set
+        {
+            score = value;
+            GameEvents.TriggerScoreUpdate(score);
+        }
+    }
 }

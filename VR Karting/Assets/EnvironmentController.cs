@@ -2,23 +2,22 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 
 public class EnvironmentController : MonoBehaviour
 {
     [Serializable]
-    public class WeatherObjects : SerializedDictionary<WeatherType, GameObject>
+    public class WeatherObjects : SerializableDictionary<WeatherType, GameObject>
     {
     }
 
     [Serializable]
-    public class SkyboxByTimeOfDay : SerializedDictionary<TimeOfDay, Material>
+    public class SkyboxByTimeOfDay : SerializableDictionary<TimeOfDay, Material>
     {
     }
 
     [Serializable]
-    public class ColorByTimeOfDay : SerializedDictionary<TimeOfDay, Color>
+    public class ColorByTimeOfDay : SerializableDictionary<TimeOfDay, Color>
     {
     }
 
