@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0621fb56-ac00-4f2b-834c-ee65afd158fa" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/App.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Data/Table/Script/Editor/SpeakersEditor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Data/Table/Script/Editor/SpeakersEditor.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Data/Table/Script/Speaker.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Data/Table/Script/Speaker.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Data/Table/Script/Speakers.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Data/Table/Script/Speakers.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/NoiseController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/NoiseController.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/.signature.p7s" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/LICENSE.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/Newtonsoft.Json.13.0.3.nupkg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/net20/Newtonsoft.Json.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/net20/Newtonsoft.Json.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/net35/Newtonsoft.Json.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/net35/Newtonsoft.Json.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/net40/Newtonsoft.Json.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/net40/Newtonsoft.Json.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/net45/Newtonsoft.Json.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/net45/Newtonsoft.Json.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/net6.0/Newtonsoft.Json.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/net6.0/Newtonsoft.Json.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/netstandard1.0/Newtonsoft.Json.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/netstandard1.0/Newtonsoft.Json.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/netstandard1.3/Newtonsoft.Json.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/netstandard1.3/Newtonsoft.Json.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/netstandard2.0/Newtonsoft.Json.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/lib/netstandard2.0/Newtonsoft.Json.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Packages/Newtonsoft.Json.13.0.3/packageIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.VR Karting/.idea/aws.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.VR Karting/.idea/aws.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameEvents.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameEvents.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Race.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Race.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ImageExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ImageExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StimuliObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/StimuliObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StimuliSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/StimuliSpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Anton SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Anton SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Bangers SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Bangers SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Roboto-Bold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Roboto-Bold SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="2hMNTbBCrvrpvwEy9ZfnMLRzxdP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "dev",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0621fb56-ac00-4f2b-834c-ee65afd158fa" name="Changes" comment="" />
+      <created>1717399996805</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717399996805</updated>
+      <workItem from="1717399998481" duration="11000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

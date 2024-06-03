@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using DataTables;
 using LiveLarson.Util;
@@ -49,6 +48,14 @@ public class StimuliObject : MonoBehaviour
     {
         if (GlobalInfo.IsStimuliAnswered == false)
         {
+            if (GlobalInfo.IsFirstStimuli)
+            {
+                GlobalInfo.IsFirstStimuli = false;
+                PlayStimuli();
+                Debug.Log("First stimuli");
+                return;
+            }
+            
             PushAllStimuliForward();
         }
         else

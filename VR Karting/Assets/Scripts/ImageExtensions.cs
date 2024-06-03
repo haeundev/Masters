@@ -51,5 +51,13 @@ namespace Util.Extensions
             tweener.timeScale = 1;
             Time.timeScale = 1;
         }
+        
+        public static void DoScaleToZero(this Transform transform, Ease ease = Ease.OutExpo, float duration = 0.3f)
+        {
+            transform.localScale = Vector3.one;
+            var tweener = transform.DOScale(Vector3.zero, duration).SetEase(ease);
+            tweener.timeScale = 1;
+            Time.timeScale = 1;
+        }
     }
 }

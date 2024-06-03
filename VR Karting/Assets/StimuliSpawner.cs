@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using DataTables;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -22,15 +24,18 @@ public class StimuliSpawner : MonoBehaviour
     {
         Instance = this;
         
+        GameEvents.OnPushAllStimuliForward += PushAllStimuliForward;
+    }
+
+    public void Init()
+    {
         Clear();
         Spawn();
-        
-        GameEvents.OnPushAllStimuliForward += PushAllStimuliForward;
     }
 
     private void PushAllStimuliForward()
     {
-        foreach (var item in _spawnedItems)
+        foreach (var item in _spawnedItems.Where(p => p != default))
         {
             var pos = item.transform.position;
             item.transform.position = new Vector3(pos.x, pos.y, pos.z + _eachDistance);
@@ -89,5 +94,10 @@ public class StimuliSpawner : MonoBehaviour
         foreach (var item in _spawnedItems)
             DestroyImmediate(item);
         _spawnedItems.Clear();
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnPushAllStimuliForward -= PushAllStimuliForward;
     }
 }
