@@ -15,36 +15,65 @@ public enum NoiseMode { None, SingleTalker, Environmental }
 
 public class GameController : MonoBehaviour
 {
-    [Title("Today's speaker", "$Speaker")]
+    [Title("Today's Session Info", "$CombinedSessionInfo")]
     [OnValueChanged("GetSessionInfo")]
     [SerializeField][Range(1, 40)] private int participantID;
+    [OnValueChanged("GetSessionInfo")]
     [SerializeField][Range(1, 8)] private int sessionID;
     
+    public string CombinedSessionInfo => $"Speaker: {SpeakerID} |  IsAutoDrive: {sessionInfo.IsAutoDrive} |  Noise: {noiseMode.ToString()}";
+
+    private NoiseMode GetTodaysNoise()
+    {
+        if (sessionID < 5)
+            return NoiseMode.None;
+        
+        noiseMode = sessionInfo.NoiseOrder switch
+        {
+            "SingleTalkerFirst" => sessionID is 5 or 6 ? NoiseMode.SingleTalker : NoiseMode.Environmental,
+            "EnvironmentFirst" => sessionID is 5 or 6 ? NoiseMode.Environmental : NoiseMode.SingleTalker,
+            _ => NoiseMode.None
+        };
+
+        return noiseMode;
+    }
+
     private void GetSessionInfo()
     {
-        var session = speakersSO.Values.FirstOrDefault(p => p.ParticipantID == participantID);
-        Speaker = sessionID switch
+        sessionInfo = sessionInfosAsset.Values.FirstOrDefault(p => p.ParticipantID == participantID);
+        SpeakerID = sessionID switch
         {
-            1 => session.Session1,
-            2 => session.Session2,
-            3 => session.Session3,
-            4 => session.Session4,
-            5 => session.Session5,
-            6 => session.Session6,
-            7 => session.Session7,
-            8 => session.Session8,
-            _ => Speaker
+            1 => sessionInfo.Session1,
+            2 => sessionInfo.Session2,
+            3 => sessionInfo.Session3,
+            4 => sessionInfo.Session4,
+            5 => sessionInfo.Session5,
+            6 => sessionInfo.Session6,
+            7 => sessionInfo.Session7,
+            8 => sessionInfo.Session8,
+            _ => SpeakerID
         };
-        Debug.Log($"Speaker: {Speaker}");
+        
+        IsWeek2 = sessionID switch
+        {
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            _ => false
+        };
+        
+        GetTodaysNoise();
     }
     
-    [HideInInspector]
-    public string Speaker;
+    [HideInInspector] public SessionInfo sessionInfo;
+    [HideInInspector] public string SpeakerID;
+    [HideInInspector] public bool IsWeek2;
     
     [Title("Test Settings")]
     [SerializeField] public float speed = 1f;
-    [SerializeField] public DriveMode driveMode = DriveMode.Auto;
-    [SerializeField] public NoiseMode noiseMode = NoiseMode.None;
+    [LabelText("Force Drive (For Test Purpose Only)")] [SerializeField] public DriveMode driveMode = DriveMode.Auto;
+    [LabelText("Force Noise (For Test Purpose Only)")] [SerializeField] public NoiseMode noiseMode = NoiseMode.None;
     
     private Transform _lookAt;
     private StimuliSpawner _stimuliSpawner;
@@ -61,7 +90,7 @@ public class GameController : MonoBehaviour
     [FoldoutGroup("Refs")] [SerializeField] private TextMeshProUGUI textB;
     [FoldoutGroup("Refs")] [SerializeField] public EnvironmentController environmentController;
     [FoldoutGroup("Refs")] [SerializeField] public NoiseController noiseController;
-    [FoldoutGroup("Refs")] [SerializeField] private Speakers speakersSO;
+    [FoldoutGroup("Refs")] [SerializeField] private SessionInfos sessionInfosAsset;
     [FoldoutGroup("Refs")] [SerializeField] private Button startButton;
 
     [SerializeField] private bool speedToggle;
@@ -92,7 +121,7 @@ public class GameController : MonoBehaviour
         textB.text = "";
         
         environmentController.SetRandomEnvironment();
-        noiseController.Init(noiseMode, sessionID > 4);
+        noiseController.Init(noiseMode, IsWeek2, SpeakerID);
     }
 
     private void UserStart()
@@ -118,7 +147,7 @@ public class GameController : MonoBehaviour
         
         startButton.transform.parent.gameObject.SetActive(false);
         
-        _stimuliSpawner.Init();
+        _stimuliSpawner.Init(sessionID, SpeakerID, noiseMode);
         _stimuli = _stimuliSpawner.transform.GetComponentsInChildren<StimuliObject>().Select(p => p.transform).ToList();
         Debug.Log($"Total targets: {_stimuli.Count}");
         

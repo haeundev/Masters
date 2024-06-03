@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using DataTables;
@@ -11,12 +10,15 @@ public class StimuliSpawner : MonoBehaviour
     [SerializeField] private GameObject stimuliPrefab;
     [SerializeField] private float randomX;
     [SerializeField] private float totalDistance = 1400f;
-    [SerializeField] private int sessionCount = 2;
+    [SerializeField] private int pair = 2;
 
     [SerializeField] private Stimulis stimuliSO;
 
     private readonly List<GameObject> _spawnedItems = new();
     private float _eachDistance;
+    private int _sessionID;
+    private string _speakerID;
+    private NoiseMode _noiseMode;
     
     public static StimuliSpawner Instance { get; private set; }
 
@@ -27,8 +29,12 @@ public class StimuliSpawner : MonoBehaviour
         GameEvents.OnPushAllStimuliForward += PushAllStimuliForward;
     }
 
-    public void Init()
+    public void Init(int sessionID, string speakerID, NoiseMode noiseMode)
     {
+        _sessionID = sessionID;
+        _speakerID = speakerID;
+        _noiseMode = noiseMode;
+        
         Clear();
         Spawn();
     }
@@ -64,9 +70,9 @@ public class StimuliSpawner : MonoBehaviour
         var index = 0;
 
         var initialDistance = totalDistance / 2; // 맵에 뒤에 더 추가해놓긴 했는데 그건 스페어로 사용.
-        _eachDistance = initialDistance / (data.Count * sessionCount);
+        _eachDistance = initialDistance / (data.Count * pair);
         
-        for (var i = 0; i < sessionCount; i++)
+        for (var i = 0; i < pair; i++)
         {
             for (var j = 0; j < data.Count; j++)
             {
@@ -77,9 +83,9 @@ public class StimuliSpawner : MonoBehaviour
                     parentPos.y,
                     parentPos.z + index * _eachDistance);
                 
-                var isOddTurnSession = i % 2 == 0;
+                var isOddPair = i % 2 == 0;
                 var info = data[j];
-                stimuli.GetComponentInChildren<StimuliObject>().SetInfo(info, isOddTurnSession ? info.A : info.B);
+                stimuli.GetComponentInChildren<StimuliObject>().SetInfo(info, _sessionID, _speakerID, _noiseMode, isOddPair ? info.A : info.B);
 
                 _spawnedItems.Add(stimuli);
                 

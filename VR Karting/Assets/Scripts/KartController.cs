@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class KartController : MonoBehaviour
 {
+    public static KartController Instance { get; private set; }
+    
     private PostProcessVolume _postVolume;
     private PostProcessProfile _postProfile;
 
@@ -47,6 +50,11 @@ public class KartController : MonoBehaviour
     [Header("Particles")] public Transform wheelParticles;
     public Transform flashParticles;
     public Color[] turboColors;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
