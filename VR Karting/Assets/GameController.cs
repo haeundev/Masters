@@ -15,7 +15,6 @@ public class GameController : MonoBehaviour
     [SerializeField] public bool isAutoDrive = true;
     [SerializeField] public EnvironmentController environmentController;
     [SerializeField] public float speed = 1f;
-    private bool _isLookAtSet;
     private Transform _lookAt;
     private StimuliSpawner _stimuliSpawner;
     private List<FoodItem> _items;
@@ -67,10 +66,10 @@ public class GameController : MonoBehaviour
 
     private void OnStimuliTriggered(GameObject target, Stimuli info, string answer)
     {
-        _isLookAtSet = false;
-        
         _currentInfo = info;
         _currentAnswer = answer;
+        
+        GlobalInfo.IsStimuliAnswered = false;
         
         SetDisplayedInfo(_currentInfo);
         
@@ -94,6 +93,8 @@ public class GameController : MonoBehaviour
     {
         if (!_isWaitForResponse)
             return;
+        
+        GlobalInfo.IsStimuliAnswered = true;
         
         Debug.Log($"Response: {response}");
         
@@ -141,6 +142,7 @@ public class GameController : MonoBehaviour
         }
         
         var currentTarget = stimulis[_currentTargetIndex];
+        
         var kartPos = _kartController.transform.position;
         var targetPos = currentTarget.position;
         var targetPosition = new Vector3(targetPos.x, kartPos.y, targetPos.z); // Target position on the X and Z axes, Y axis is ignored
@@ -154,7 +156,7 @@ public class GameController : MonoBehaviour
         }
         
         // Move on to the next target
-        if (Vector3.Distance(_kartController.transform.position, targetPosition) < 2f)
+        if (Vector3.Distance(_kartController.transform.position, targetPosition) < 2f && GlobalInfo.IsStimuliAnswered)
         {
             _currentTargetIndex++;
             

@@ -8,6 +8,8 @@ public static class GlobalInfo
     public static Stimuli CurrentStimuli;
     public static string CurrentAnswer;
     private static int score;
+    public static bool IsStimuliAnswered = false;
+    public static bool IsFirstStimuli = true;
 
     public static int Score
     {

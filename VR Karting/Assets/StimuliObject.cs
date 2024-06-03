@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using DataTables;
 using LiveLarson.Util;
@@ -23,7 +24,7 @@ public class StimuliObject : MonoBehaviour
         _food.OnTrigger += AddScore;
 
         _stimuliTrigger = GetComponentInChildren<StimuliTrigger>();
-        _stimuliTrigger.OnTrigger += PlayStimuli;
+        _stimuliTrigger.OnTrigger += TryPlayStimuli;
     }
 
     private void AddScore()
@@ -33,7 +34,7 @@ public class StimuliObject : MonoBehaviour
 
     private void OnDestroy()
     {
-        _stimuliTrigger.OnTrigger -= PlayStimuli;
+        _stimuliTrigger.OnTrigger -= TryPlayStimuli;
         _food.OnTrigger -= AddScore;
     }
 
@@ -42,6 +43,23 @@ public class StimuliObject : MonoBehaviour
         _info = stimuliInfo;
         _answer = answer;
         gameObject.name = $"{_info.Contrast}: answer ==> {answer}";
+    }
+
+    private void TryPlayStimuli()
+    {
+        if (GlobalInfo.IsStimuliAnswered == false)
+        {
+            PushAllStimuliForward();
+        }
+        else
+        {
+            PlayStimuli();
+        }
+    }
+    
+    private void PushAllStimuliForward()
+    {
+        GameEvents.TriggerPushAllStimuliForward();
     }
 
     private void PlayStimuli()

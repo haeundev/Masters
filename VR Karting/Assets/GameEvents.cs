@@ -6,6 +6,7 @@ public static class GameEvents
 {
     public static event Action<GameObject, Stimuli, string> OnStimuliTriggered;
     public static event Action<int> OnScoreUpdate;
+    public static event Action OnPushAllStimuliForward;
 
     public static void TriggerStimuli(GameObject lookAt, Stimuli stimuliInfo, string word)
     {
@@ -15,5 +16,10 @@ public static class GameEvents
     public static void TriggerScoreUpdate(int score)
     {
         OnScoreUpdate?.Invoke(score);
+    }
+
+    public static void TriggerPushAllStimuliForward()
+    {
+        OnPushAllStimuliForward?.Invoke();
     }
 }
