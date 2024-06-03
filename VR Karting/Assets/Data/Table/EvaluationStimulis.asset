@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32b59acc51335f94bbff4aea7b7308a1, type: 3}
+  m_Name: EvaluationStimulis
+  m_EditorClassIdentifier: 
+  Values:
+  - Contrast: "\u026A vs. i\u02D0"
+    A: hid
+    B: heed
+  - Contrast: "\u025B vs. \xE6"
+    A: head
+    B: had
+  - Contrast: "\u028C vs. \u0251"
+    A: hud
+    B: hod
+  - Contrast: "\u028A vs. u\u02D0"
+    A: hood
+    B: who'd
+  - Contrast: "\u0254 vs. o\u028A"
+    A: bought
+    B: boat
+  - Contrast: "e\u026A vs. \u026A"
+    A: bait
+    B: bit
