@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,6 +113,8 @@ public class GameController : MonoBehaviour
         startButton.onClick.AddListener(UserStart);
     }
     
+    private TextFileHandler _fileHandler;
+    
     private void Start()
     {
         textA.transform.parent.localScale = Vector3.zero;
@@ -122,6 +125,9 @@ public class GameController : MonoBehaviour
         
         environmentController.SetRandomEnvironment();
         noiseController.Init(noiseMode, IsWeek2, SpeakerID);
+        
+        var date = DateTime.Today.ToString("dd-MM-yyyy");
+        _fileHandler = new TextFileHandler(Application.persistentDataPath, $"Training p{participantID} {SpeakerID} {date}.txt");
     }
 
     private void UserStart()
@@ -205,8 +211,9 @@ public class GameController : MonoBehaviour
         
         Debug.Log($"Response: {response}");
         
-        if (textA.text == _currentAnswer && response == "A" ||
-            textB.text == _currentAnswer && response == "B")
+        var isCorrect = textA.text == _currentAnswer && response == "A" || textB.text == _currentAnswer && response == "B";
+        
+        if (isCorrect)
         {
             Debug.Log("Correct!");
             
@@ -220,6 +227,8 @@ public class GameController : MonoBehaviour
             
             FloatEffect.Play(false);
         }
+        
+        _fileHandler.WriteLine($"{_currentAnswer}, {isCorrect}");
         
         _isWaitForResponse = false;
 
@@ -310,5 +319,10 @@ public class GameController : MonoBehaviour
     private void OnDestroy()
     {
         startButton.onClick.RemoveAllListeners();
+    }
+    
+    private void OnApplicationQuit()
+    {
+        _fileHandler.CloseFile();
     }
 }

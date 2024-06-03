@@ -69,6 +69,14 @@ public class EvaluationController : MonoBehaviour
         icon.SetActive(false);
     }
 
+    private TextFileHandler _fileHandler;
+
+    private void Start()
+    {
+        var date = DateTime.Today.ToString("dd-MM-yyyy");
+        _fileHandler = new TextFileHandler(Application.persistentDataPath, $"Evaluation p{participantID} {SpeakerID} {date}.txt");
+    }
+
     [Button]
     private void MakeTrialQueue()
     {
@@ -160,8 +168,14 @@ public class EvaluationController : MonoBehaviour
             yield return new WaitUntil(() => _answer != string.Empty);
             
             var isCorrect = _answer == trial.answer;
-            
+            _fileHandler.WriteLine($"{trial.answer}, {isCorrect}");
+
             Debug.Log($"Answer: {_answer}, Correct?: {isCorrect}");
         }
+    }
+    
+    private void OnApplicationQuit()
+    {
+        _fileHandler.CloseFile();
     }
 }
