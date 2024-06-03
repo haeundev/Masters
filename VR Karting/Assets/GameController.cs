@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textA;
     [SerializeField] private TextMeshProUGUI textB;
     
+    [SerializeField] private bool speedToggle;
+    
     private bool _isEnded;
     private Stimuli _currentInfo;
     private string _currentAnswer;
@@ -56,6 +58,13 @@ public class GameController : MonoBehaviour
         textB.text = "";
         
         environmentController.SetRandomEnvironment();
+    }
+    
+    [Button(SdfIconType.Bicycle, "Start / Stop")]
+    public void ToggleSpeed()
+    {
+        speedToggle = !speedToggle;
+        _kartController.speedInput = speedToggle;
     }
     
     [Button]

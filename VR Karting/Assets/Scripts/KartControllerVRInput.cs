@@ -28,8 +28,6 @@ public class KartControllerVRInput : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        KartController.speedInput = true;
-        
         // if (_gameController.isAutoDrive)
         // {
         //     KartController.speedInput = true;
