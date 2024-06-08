@@ -223,14 +223,14 @@ namespace UnityEngine.XR.Content.Interaction
             UpdateBaseKnobRotation();
             UpdateRotation(true);
             
-            Debug.Log("Start Grab");
+//            Debug.Log("Start Grab");
         }
 
         void EndGrab(SelectExitEventArgs args)
         {
             m_Interactor = null;
             
-            Debug.Log("End Grab");
+  //          Debug.Log("End Grab");
         }
 
         public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)

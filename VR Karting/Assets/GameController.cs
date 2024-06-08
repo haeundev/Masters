@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour
     [HideInInspector] public string SpeakerID;
     [HideInInspector] public bool IsWeek2;
     
-    [Title("Test Settings")]
+    [Title("Settings")]
     [SerializeField] public float speed = 1f;
     [LabelText("Force Drive (For Test Purpose Only)")] [SerializeField] public DriveMode driveMode = DriveMode.Auto;
     [LabelText("Force Noise (For Test Purpose Only)")] [SerializeField] public NoiseMode noiseMode = NoiseMode.None;
@@ -134,6 +134,8 @@ public class GameController : MonoBehaviour
     {
         StartCoroutine(CoUserStart());
     }
+    
+    private bool _isMovingForward;
 
     private IEnumerator CoUserStart()
     {
@@ -157,7 +159,7 @@ public class GameController : MonoBehaviour
         _stimuli = _stimuliSpawner.transform.GetComponentsInChildren<StimuliObject>().Select(p => p.transform).ToList();
         Debug.Log($"Total targets: {_stimuli.Count}");
         
-        _kartController.speedInput = true;
+        _isMovingForward = true;
         speedToggle = true;
         GlobalInfo.IsFirstStimuli = true;
     }
@@ -166,7 +168,7 @@ public class GameController : MonoBehaviour
     public void ToggleSpeed()
     {
         speedToggle = !speedToggle;
-        _kartController.speedInput = speedToggle;
+        _isMovingForward = speedToggle;
     }
     
     [Button]
@@ -237,10 +239,24 @@ public class GameController : MonoBehaviour
         instructionText.transform.DOScale(Vector3.zero, 0.3f);
     }
 
+    [SerializeField] private Transform kartTransform;
+    
+    private Vector3 _forward;
+    
     private void Update()
     {
+        if (_isMovingForward == false)
+            return;
+        
         if (driveMode == DriveMode.Auto)
+        {
             MoveTowardsTarget();
+        }
+        else // manual drive
+        {
+            _forward = kartTransform.transform.forward;
+            kartTransform.position += _forward * Time.deltaTime * speed;
+        }
     }
 
     private void MoveTowardsTarget()
@@ -258,20 +274,29 @@ public class GameController : MonoBehaviour
         }
         
         var currentTarget = _stimuli[_currentTargetIndex];
-        var kartPos = _kartController.transform.position;
+        var kartPos = kartTransform.position;
         var targetPos = currentTarget.position;
         var targetPosition = new Vector3(targetPos.x, kartPos.y, targetPos.z); // Target position on the X and Z axes, Y axis is ignored
         
         if (driveMode == DriveMode.Auto) // auto rotate
         {
+            Debug.Log($"Current target: {currentTarget.name}");
+            
             var targetDirection = new Vector3(targetPosition.x, kartPos.y, targetPosition.z) - kartPos;
             targetDirection.Normalize();
-            var newForward = Vector3.Lerp(_kartController.transform.forward, targetDirection, Time.deltaTime * 3f);
-            _kartController.transform.forward = newForward;
+            
+            Debug.Log($"Target direction: {targetDirection}");
+            
+            var newForward = Vector3.Lerp(kartTransform.forward, targetDirection, Time.deltaTime * 3f);
+            _forward = newForward;
+            
+            Debug.Log($"Forward: {_forward}");
+            
+            kartTransform.position += _forward * Time.deltaTime * speed;
         }
         
         // Move on to the next target
-        if (Vector3.Distance(_kartController.transform.position, targetPosition) < 2f)
+        if (Vector3.Distance(kartTransform.position, targetPosition) < 2f)
         {
             if (GlobalInfo.IsStimuliAnswered)
             {
