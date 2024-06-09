@@ -42,6 +42,9 @@ public class GameController : MonoBehaviour
     private void GetSessionInfo()
     {
         sessionInfo = sessionInfosAsset.Values.FirstOrDefault(p => p.ParticipantID == participantID);
+        
+        driveMode = sessionInfo.IsAutoDrive ? DriveMode.Auto : DriveMode.Manual;
+        
         SpeakerID = sessionID switch
         {
             1 => sessionInfo.Session1,
@@ -245,6 +248,15 @@ public class GameController : MonoBehaviour
     
     private void Update()
     {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.S))
+            UserStart();
+        else if (Input.GetKeyDown(KeyCode.Q))
+            OnResponse("A");
+        else if (Input.GetKeyDown(KeyCode.E))
+            OnResponse("B");
+#endif
+        
         if (_isMovingForward == false)
             return;
         
@@ -280,19 +292,11 @@ public class GameController : MonoBehaviour
         
         if (driveMode == DriveMode.Auto) // auto rotate
         {
-            Debug.Log($"Current target: {currentTarget.name}");
-            
             var targetDirection = new Vector3(targetPosition.x, kartPos.y, targetPosition.z) - kartPos;
             targetDirection.Normalize();
-            
-            Debug.Log($"Target direction: {targetDirection}");
-            
-            var newForward = Vector3.Lerp(kartTransform.forward, targetDirection, Time.deltaTime * 3f);
-            _forward = newForward;
-            
-            Debug.Log($"Forward: {_forward}");
-            
-            kartTransform.position += _forward * Time.deltaTime * speed;
+            var lookRotation = Quaternion.LookRotation(targetDirection);
+            kartTransform.rotation = Quaternion.Slerp(kartTransform.rotation, lookRotation, Time.deltaTime * 2f);
+            kartTransform.position += kartTransform.forward * Time.deltaTime * speed;
         }
         
         // Move on to the next target
@@ -316,14 +320,14 @@ public class GameController : MonoBehaviour
     private void MoveOnToNextTarget()
     {
         _currentTargetIndex++;
-            
+        
         if (_currentTargetIndex >= _stimuli.Count)
         {
             _isEnded = true;
             return;
         }
             
-        Debug.Log("Target reached. Next target: " + _stimuli[_currentTargetIndex].name);
+        Debug.Log("Target reached. Next target: " + _stimuli[_currentTargetIndex].name + "\nCurrent target index: " + _currentTargetIndex);
     }
 
     private void SetDisplayedInfo(Stimuli info)
