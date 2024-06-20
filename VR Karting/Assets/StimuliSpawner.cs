@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DataTables;
+using LiveLarson.Util;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -65,7 +66,7 @@ public class StimuliSpawner : MonoBehaviour
         //
         // // Merge the shuffled halves
         // var data = Extensions.MergeLists(firstHalf, secondHalf);
-        var data = stimuliSO.Values;
+        var data = stimuliSO.Values.ToShuffleList();
 
         var index = 0;
 

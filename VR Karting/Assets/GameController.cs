@@ -18,21 +18,18 @@ public class GameController : MonoBehaviour
 {
     [Title("Today's Session Info", "$CombinedSessionInfo")]
     [OnValueChanged("GetSessionInfo")]
-    [SerializeField][Range(1, 40)] private int participantID;
+    [SerializeField][Range(1, 36)] private int participantID;
     [OnValueChanged("GetSessionInfo")]
     [SerializeField][Range(1, 8)] private int sessionID;
     
-    public string CombinedSessionInfo => $"Speaker: {SpeakerID} |  IsAutoDrive: {sessionInfo.IsAutoDrive} |  Noise: {noiseMode.ToString()}";
+    public string CombinedSessionInfo => $"P{participantID}  |  Speaker: {SpeakerID} |  IsAutoDrive: {sessionInfo.IsAutoDrive} |  Noise: {noiseMode.ToString()}";
 
     private NoiseMode GetTodaysNoise()
     {
-        if (sessionID < 5)
-            return NoiseMode.None;
-        
-        noiseMode = sessionInfo.NoiseOrder switch
+        noiseMode = sessionInfo.NoiseMode switch
         {
-            "SingleTalkerFirst" => sessionID is 5 or 6 ? NoiseMode.SingleTalker : NoiseMode.Environmental,
-            "EnvironmentFirst" => sessionID is 5 or 6 ? NoiseMode.Environmental : NoiseMode.SingleTalker,
+            "SingleTalker" => NoiseMode.SingleTalker,
+            "Environmental" => NoiseMode.Environmental,
             _ => NoiseMode.None
         };
 

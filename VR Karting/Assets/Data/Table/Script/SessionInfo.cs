@@ -22,7 +22,7 @@ namespace DataTables
         public string Session6;
         public string Session7;
         public string Session8;
-        public string NoiseOrder;
+        public string NoiseMode;
     }
 
 }
