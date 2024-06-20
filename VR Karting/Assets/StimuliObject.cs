@@ -102,10 +102,19 @@ public class StimuliObject : MonoBehaviour
     private IEnumerator PlayWord()
     {
         var word = new GameObject("Target Word").AddComponent<AudioSource>();
-        word.clip = Resources.Load<AudioClip>($"Audio/Words/Target/{_speakerID}/{_answer}");
+        var path = $"Audio/Words/Target/{_speakerID}/{_answer}";
+        word.clip = Resources.Load<AudioClip>(path);
+        
+        if (word.clip == null)
+        {
+            Debug.LogError($"Audio clip not found: {path}");
+            yield break;
+        }
+        
         word.volume = 0.63096f;
         word.Play();
-        Destroy(word.gameObject, word.clip.length);
+        var duration = word.clip.length;
+        Destroy(word.gameObject, duration);
         
         yield break;
     }

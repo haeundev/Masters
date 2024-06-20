@@ -66,33 +66,73 @@ public class StimuliSpawner : MonoBehaviour
         //
         // // Merge the shuffled halves
         // var data = Extensions.MergeLists(firstHalf, secondHalf);
+        // var data = stimuliSO.Values.ToShuffleList();
+        //
+        // var index = 0;
+        //
+        // var initialDistance = totalDistance / 2; // 맵에 뒤에 더 추가해놓긴 했는데 그건 스페어로 사용.
+        // _eachDistance = initialDistance / (data.Count * pair);
+        //
+        // for (var i = 0; i < pair; i++)
+        // {
+        //     for (var j = 0; j < data.Count; j++)
+        //     {
+        //         var stimuli = Instantiate(stimuliPrefab, transform);
+        //         var parentPos = transform.position;
+        //         stimuli.transform.position = new Vector3(
+        //             parentPos.x + Random.Range(-randomX, randomX),
+        //             parentPos.y,
+        //             parentPos.z + index * _eachDistance);
+        //         
+        //         var isOddPair = i % 2 == 0;
+        //         var info = data[j];
+        //         stimuli.GetComponentInChildren<StimuliObject>().SetInfo(info, _sessionID, _speakerID, _noiseMode, isOddPair ? info.A : info.B);
+        //
+        //         _spawnedItems.Add(stimuli);
+        //         
+        //         index++;
+        //     }
+        // }
+        
         var data = stimuliSO.Values.ToShuffleList();
+        var doubledData = new List<Stimuli>(data.Count * 2);
+
+        // Double the list
+        doubledData.AddRange(data);
+        doubledData.AddRange(data);
+
+        // Shuffle the doubled list
+        doubledData = doubledData.OrderBy(x => Random.value).ToList();
 
         var index = 0;
-
         var initialDistance = totalDistance / 2; // 맵에 뒤에 더 추가해놓긴 했는데 그건 스페어로 사용.
-        _eachDistance = initialDistance / (data.Count * pair);
-        
-        for (var i = 0; i < pair; i++)
-        {
-            for (var j = 0; j < data.Count; j++)
-            {
-                var stimuli = Instantiate(stimuliPrefab, transform);
-                var parentPos = transform.position;
-                stimuli.transform.position = new Vector3(
-                    parentPos.x + Random.Range(-randomX, randomX),
-                    parentPos.y,
-                    parentPos.z + index * _eachDistance);
-                
-                var isOddPair = i % 2 == 0;
-                var info = data[j];
-                stimuli.GetComponentInChildren<StimuliObject>().SetInfo(info, _sessionID, _speakerID, _noiseMode, isOddPair ? info.A : info.B);
+        _eachDistance = initialDistance / doubledData.Count;
 
-                _spawnedItems.Add(stimuli);
-                
-                index++;
-            }
+        // Used to keep track of which option was used for each pair
+        var usedAnswers = new HashSet<string>();
+
+        foreach (var info in doubledData)
+        {
+            var stimuli = Instantiate(stimuliPrefab, transform);
+            var parentPos = transform.position;
+            stimuli.transform.position = new Vector3(
+                parentPos.x + Random.Range(-randomX, randomX),
+                parentPos.y,
+                parentPos.z + index * _eachDistance);
+
+            // get random answer, between A and B
+            var rnd = Random.Range(0, 2);
+            var randomAnswer = rnd == 0 ? info.A : info.B;
+            var isUsedAnswer = usedAnswers.Add(randomAnswer); // Add returns true if the item was not present in the set
+
+            stimuli.GetComponentInChildren<StimuliObject>().SetInfo(info, _sessionID, _speakerID, _noiseMode, 
+                isUsedAnswer ? randomAnswer : rnd == 0 ? info.B : info.A);
+
+            _spawnedItems.Add(stimuli);
+
+            index++;
         }
+
     }
 
     [Button]

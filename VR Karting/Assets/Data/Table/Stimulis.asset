@@ -13,115 +13,115 @@ MonoBehaviour:
   m_Name: Stimulis
   m_EditorClassIdentifier: 
   Values:
-  - ID: 101
+  - ID: 1
     Contrast: "\u026A vs. i\u02D0"
     A: rich
     B: reach
-  - ID: 102
+  - ID: 2
     Contrast: "\u026A vs. i\u02D0"
     A: itch
     B: each
-  - ID: 103
+  - ID: 3
     Contrast: "\u026A vs. i\u02D0"
     A: sin
     B: scene
-  - ID: 104
+  - ID: 4
     Contrast: "\u026A vs. i\u02D0"
     A: list
     B: least
-  - ID: 105
+  - ID: 5
     Contrast: "\u026A vs. i\u02D0"
     A: chip
     B: cheap
-  - ID: 106
+  - ID: 6
     Contrast: "\u026A vs. i\u02D0"
     A: filled
     B: field
-  - ID: 107
+  - ID: 7
     Contrast: "\u026A vs. i\u02D0"
     A: grin
     B: green
-  - ID: 201
+  - ID: 8
     Contrast: "\u025B vs. \xE6"
     A: bet
     B: bat
-  - ID: 202
+  - ID: 9
     Contrast: "\u025B vs. \xE6"
     A: pet
     B: pat
-  - ID: 203
+  - ID: 10
     Contrast: "\u025B vs. \xE6"
     A: met
     B: mat
-  - ID: 204
+  - ID: 11
     Contrast: "\u025B vs. \xE6"
     A: set
     B: sat
-  - ID: 205
+  - ID: 12
     Contrast: "\u025B vs. \xE6"
     A: ten
     B: tan
-  - ID: 206
+  - ID: 13
     Contrast: "\u025B vs. \xE6"
     A: men
     B: man
-  - ID: 207
+  - ID: 14
     Contrast: "\u025B vs. \xE6"
     A: Ken
     B: can
-  - ID: 301
+  - ID: 15
     Contrast: "\u028C vs. \u0251"
     A: cut
     B: cot
-  - ID: 302
+  - ID: 16
     Contrast: "\u028C vs. \u0251"
     A: but
     B: bot
-  - ID: 303
+  - ID: 17
     Contrast: "\u028C vs. \u0251"
     A: hut
     B: hot
-  - ID: 304
+  - ID: 18
     Contrast: "\u028C vs. \u0251"
     A: nut
     B: not
-  - ID: 305
+  - ID: 19
     Contrast: "\u028C vs. \u0251"
     A: sub
     B: sob
-  - ID: 306
+  - ID: 20
     Contrast: "\u028C vs. \u0251"
     A: fund
     B: fond
-  - ID: 307
+  - ID: 21
     Contrast: "\u028C vs. \u0251"
     A: pup
     B: pop
-  - ID: 401
+  - ID: 22
     Contrast: "\u028A vs. u\u02D0"
     A: look
     B: Luke
-  - ID: 402
+  - ID: 23
     Contrast: "\u028A vs. u\u02D0"
     A: pull
     B: pool
-  - ID: 403
+  - ID: 24
     Contrast: "\u028A vs. u\u02D0"
     A: full
     B: fool
-  - ID: 404
+  - ID: 25
     Contrast: "\u028A vs. u\u02D0"
-    A: hood
-    B: who'd
-  - ID: 405
+    A: should
+    B: shooed
+  - ID: 26
     Contrast: "\u028A vs. u\u02D0"
     A: bull
     B: Boole
-  - ID: 406
+  - ID: 27
     Contrast: "\u028A vs. u\u02D0"
     A: could
     B: cooed
-  - ID: 407
+  - ID: 28
     Contrast: "\u028A vs. u\u02D0"
     A: would
     B: wooed

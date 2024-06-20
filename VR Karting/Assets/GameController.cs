@@ -211,8 +211,19 @@ public class GameController : MonoBehaviour
         GlobalInfo.IsStimuliAnswered = true;
         
         Debug.Log($"Response: {response}");
+
+        bool isCorrect;
         
-        var isCorrect = textA.text == _currentAnswer && response == "A" || textB.text == _currentAnswer && response == "B";
+        if (_isSwapped)
+            isCorrect = textB.text == _currentAnswer && response == "A" || textA.text == _currentAnswer && response == "B";
+        else
+            isCorrect = textA.text == _currentAnswer && response == "A" || textB.text == _currentAnswer && response == "B";
+        
+        // debug log for textA.text == _currentAnswer
+        Debug.Log($"textA.text == _currentAnswer: {textA.text} == {_currentAnswer}");
+        Debug.Log($"textB.text == _currentAnswer: {textB.text} == {_currentAnswer}");
+        
+        
         
         if (isCorrect)
         {
@@ -241,16 +252,17 @@ public class GameController : MonoBehaviour
     [SerializeField] private Transform kartTransform;
     
     private Vector3 _forward;
-    
+    private bool _isSwapped;
+
     private void Update()
     {
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.S))
             UserStart();
         else if (Input.GetKeyDown(KeyCode.Q))
-            OnResponse("A");
+            buttonA.onClick.Invoke();
         else if (Input.GetKeyDown(KeyCode.E))
-            OnResponse("B");
+            buttonB.onClick.Invoke();
 #endif
         
         if (_isMovingForward == false)
@@ -330,6 +342,16 @@ public class GameController : MonoBehaviour
     {
         textA.text = $"{info.A}";
         textB.text = $"{info.B}";
+        
+        // swap the two button position
+        if (UnityEngine.Random.value > 0.5f)
+        {
+            var temp = buttonA.transform.position;
+            buttonA.transform.position = buttonB.transform.position;
+            buttonB.transform.position = temp;
+            
+            _isSwapped = !_isSwapped;
+        }
     }
 
     private IEnumerator OnEnded()
