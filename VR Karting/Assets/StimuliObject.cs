@@ -103,6 +103,7 @@ public class StimuliObject : MonoBehaviour
     {
         var word = new GameObject("Target Word").AddComponent<AudioSource>();
         word.clip = Resources.Load<AudioClip>($"Audio/Words/Target/{_speakerID}/{_answer}");
+        word.volume = 0.63096f;
         word.Play();
         Destroy(word.gameObject, word.clip.length);
         
@@ -115,6 +116,7 @@ public class StimuliObject : MonoBehaviour
 
         var word = new GameObject("Target Word").AddComponent<AudioSource>();
         word.clip = Resources.Load<AudioClip>($"Audio/Words/Target/{_speakerID}/{_answer}");
+        word.volume = 0.63096f;
         word.transform.position = soundSource.position;
         word.spatialize = false;
         word.spatialBlend = 0;
@@ -123,6 +125,7 @@ public class StimuliObject : MonoBehaviour
 
         var sentence = new GameObject("Single Talker Sentence").AddComponent<AudioSource>();
         sentence.transform.position = soundSource.position;
+        sentence.volume = 1;
         sentence.spatialize = true;
         sentence.spatialBlend = 1;
         sentence.minDistance = 100f;

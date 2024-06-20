@@ -126,7 +126,6 @@ public class GameController : MonoBehaviour
         textA.text = "";
         textB.text = "";
         
-        environmentController.SetRandomEnvironment();
         noiseController.Init(noiseMode, IsWeek2, SpeakerID);
         
         var date = DateTime.Today.ToString("dd-MM-yyyy");

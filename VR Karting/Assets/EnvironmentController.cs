@@ -62,9 +62,12 @@ public class EnvironmentController : MonoBehaviour
         SetEnvironment(randomWeather, randomTime);
     }
 
-    public void SetEnvironment(WeatherType weather, TimeOfDay time)
+    public void SetEnvironment(WeatherType weather, TimeOfDay time = default)
     {
         weatherType = weather;
+        
+        if (time == default)
+            time = (TimeOfDay)Random.Range(0, Enum.GetValues(typeof(TimeOfDay)).Length);
         timeOfDay = time;
         
         GlobalInfo.WeatherType = weatherType;

@@ -1,0 +1,2 @@
+rain was 53.9   & adjusted by 11.12 to get 65.0 	
+snow was 53.4   & adjusted by 11.57 to get 65.0 	

@@ -6,6 +6,9 @@ public class NoiseController : MonoBehaviour
 
     [SerializeField] private GameObject femaleNPC;
     [SerializeField] private GameObject maleNPC;
+    [SerializeField] private GameObject rain;
+    [SerializeField] private GameObject snow;
+    [SerializeField] public EnvironmentController environmentController;
 
     public static NoiseController Instance { get; private set; }
 
@@ -23,14 +26,26 @@ public class NoiseController : MonoBehaviour
         switch (noiseMode)
         {
             case NoiseMode.None:
+                environmentController.SetEnvironment(EnvironmentController.WeatherType.Clear);
                 break;
 
             case NoiseMode.SingleTalker:
                 OnSingleTalker(speaker);
+                environmentController.SetEnvironment(EnvironmentController.WeatherType.Clear);
                 break;
 
             case NoiseMode.Environmental:
-
+                // rain or snow, randomly
+                if (Random.value > 0.5f)
+                {
+                    rain.SetActive(true);
+                    environmentController.SetEnvironment(EnvironmentController.WeatherType.Rainy);
+                }
+                else
+                {
+                    snow.SetActive(true);
+                    environmentController.SetEnvironment(EnvironmentController.WeatherType.Snowy);
+                }
                 break;
         }
     }
@@ -39,6 +54,8 @@ public class NoiseController : MonoBehaviour
     {
         femaleNPC.SetActive(false);
         maleNPC.SetActive(false);
+        rain.SetActive(false);
+        snow.SetActive(false);
     }
 
     private void OnSingleTalker(string speaker)
