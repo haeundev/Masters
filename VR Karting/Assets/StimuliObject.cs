@@ -36,6 +36,16 @@ public class StimuliObject : MonoBehaviour
     private void AddScore()
     {
         GlobalInfo.Score++;
+        
+        Debug.Log("Add Score! Eat");
+        
+        var sfx = new GameObject("SFX").AddComponent<AudioSource>();
+        var path = $"Audio/SFX/eat.mp3";
+        sfx.clip = Resources.Load<AudioClip>(path);
+        sfx.volume = 1f;
+        sfx.Play();
+        var duration = sfx.clip.length;
+        Destroy(sfx.gameObject, duration);
     }
 
     private void OnDestroy()

@@ -213,12 +213,16 @@ public class GameController : MonoBehaviour
         Debug.Log($"Response: {response}");
 
         bool isCorrect;
-        
+
+#if UNITY_EDITOR
         if (_isSwapped)
             isCorrect = textB.text == _currentAnswer && response == "A" || textA.text == _currentAnswer && response == "B";
         else
             isCorrect = textA.text == _currentAnswer && response == "A" || textB.text == _currentAnswer && response == "B";
-        
+#else
+            isCorrect = textA.text == _currentAnswer && response == "A" || textB.text == _currentAnswer && response == "B";
+#endif
+       
         // debug log for textA.text == _currentAnswer
         Debug.Log($"textA.text == _currentAnswer: {textA.text} == {_currentAnswer}");
         Debug.Log($"textB.text == _currentAnswer: {textB.text} == {_currentAnswer}");

@@ -24,7 +24,7 @@ public class FloatEffect : MonoBehaviour
 
         var audioSource = Instance.gameObject.GetComponent<AudioSource>();
         audioSource.clip = isAnswer ? Instance.sfxOnCorrect : Instance.sfxOnWrong;
-        audioSource.volume = 0.2f;
+        audioSource.volume = isAnswer ? 0.07f : 0.2f;
         audioSource.Play();
 
         var image = Instance.gameObject.GetComponent<Image>();
