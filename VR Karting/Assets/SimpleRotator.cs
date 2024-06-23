@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class SimpleRotator : MonoBehaviour
 {
+    private Quaternion _initialRotation;
+    
     public enum Axis
     {
         X,
@@ -11,6 +14,17 @@ public class SimpleRotator : MonoBehaviour
 
     public Axis axis = Axis.Y;
     public float speed = 1f;
+
+    private void Awake()
+    {
+        _initialRotation = transform.rotation;
+    }
+
+    private void OnEnable()
+    {
+        // reset rotation
+        transform.rotation = _initialRotation;
+    }
 
     private void Update()
     {

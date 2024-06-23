@@ -7,6 +7,7 @@ public static class GameEvents
     public static event Action<GameObject, Stimuli, string> OnStimuliTriggered;
     public static event Action<int> OnScoreUpdate;
     public static event Action OnPushAllStimuliForward;
+    public static event Action OnUserStarted;
 
     public static void TriggerStimuli(GameObject lookAt, Stimuli stimuliInfo, string word)
     {
@@ -24,5 +25,11 @@ public static class GameEvents
     {
         OnPushAllStimuliForward?.Invoke();
         Debug.Log("Push all stimuli forward");
+    }
+
+    public static void TriggerUserStarted()
+    {
+        OnUserStarted?.Invoke();
+        Debug.Log("User started");
     }
 }

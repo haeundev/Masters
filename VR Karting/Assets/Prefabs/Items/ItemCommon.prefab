@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3502379859394928607}
+  - component: {fileID: 7703828669435544089}
   m_Layer: 0
   m_Name: ItemCommon
   m_TagString: Untagged
@@ -30,8 +31,22 @@ Transform:
   m_Children:
   - {fileID: 3632513223718795741}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7703828669435544089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6847580665164248109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7671d16abf507bf418cd612628c5405f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eatSound: {fileID: 8300000, guid: 5ef6db42546614a4facaceab65dbe9a5, type: 3}
+  bounceOffSound: {fileID: 8300000, guid: 724131bc8a7f34041bb9f1701f0cb58d, type: 3}
 --- !u!1001 &3314010722866657584
 PrefabInstance:
   m_ObjectHideFlags: 0

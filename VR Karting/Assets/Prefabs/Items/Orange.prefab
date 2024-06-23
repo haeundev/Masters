@@ -222,6 +222,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemCommon
       objectReference: {fileID: 0}
+    - target: {fileID: 7703828669435544089, guid: 6b39fb9ce835aef4998f4e67d1253f11,
+        type: 3}
+      propertyPath: eatSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c3ed8144059820347a6d3682909c21b9, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

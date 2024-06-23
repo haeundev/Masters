@@ -108,6 +108,10 @@ public class GameController : MonoBehaviour
     [FoldoutGroup("Refs")] [SerializeField] public NoiseController noiseController;
     [FoldoutGroup("Refs")] [SerializeField] private SessionInfos sessionInfosAsset;
     [FoldoutGroup("Refs")] [SerializeField] private Button startButton;
+    [FoldoutGroup("Refs")] [SerializeField] private GameObject arrows;
+    
+    public GameObject Arrows => arrows;
+
 
     [SerializeField] private bool speedToggle;
     
@@ -145,6 +149,8 @@ public class GameController : MonoBehaviour
         
         var date = DateTime.Today.ToString("dd-MM-yyyy");
         _fileHandler = new TextFileHandler(Application.persistentDataPath, $"Training p{participantID} {SpeakerID} {date}.txt");
+        
+        arrows.SetActive(false);
     }
 
     private void UserStart()
@@ -171,6 +177,8 @@ public class GameController : MonoBehaviour
         yield return YieldInstructionCache.WaitForSeconds(1f);
         
         startButton.transform.parent.gameObject.SetActive(false);
+        
+        GameEvents.TriggerUserStarted();
         
         _stimuliSpawner.Init(sessionID, SpeakerID, noiseMode);
         _stimuli = _stimuliSpawner.transform.GetComponentsInChildren<StimuliObject>().Select(p => p.transform).ToList();
@@ -228,6 +236,8 @@ public class GameController : MonoBehaviour
         
         GlobalInfo.IsStimuliAnswered = true;
         
+        arrows.SetActive(false);
+        
         Debug.Log($"Response: {response}");
 
         bool isCorrect;
@@ -252,8 +262,6 @@ public class GameController : MonoBehaviour
         if (isCorrect)
         {
             Debug.Log("Correct!");
-            
-            GlobalInfo.Score++;
             
             FloatEffect.Play(true);
         }
@@ -340,7 +348,6 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Waiting for response...");
                 if (GlobalInfo.IsFirstStimuli)
                 {
                     MoveOnToNextTarget();
