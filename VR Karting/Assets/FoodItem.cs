@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class FoodItem : MonoBehaviour
@@ -5,7 +6,15 @@ public class FoodItem : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
             PlayFoodSFX();
+            SetInvisible();
+        }
+    }
+
+    private void SetInvisible()
+    {
+        GetComponentsInChildren<Renderer>().ToList().ForEach(r => r.enabled = false);
     }
 
     private void PlayFoodSFX()
