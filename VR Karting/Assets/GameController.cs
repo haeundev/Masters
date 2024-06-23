@@ -8,6 +8,7 @@ using LiveLarson.Util;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Util.Extensions;
 
@@ -26,12 +27,24 @@ public class GameController : MonoBehaviour
 
     private NoiseMode GetTodaysNoise()
     {
-        noiseMode = sessionInfo.NoiseMode switch
+        if (sessionID <= 4)
         {
-            "SingleTalker" => NoiseMode.SingleTalker,
-            "Environmental" => NoiseMode.Environmental,
-            _ => NoiseMode.None
-        };
+            noiseMode = sessionInfo.NoiseMode switch
+            {
+                "SingleTalker" => NoiseMode.Environmental,
+                "Environmental" => NoiseMode.SingleTalker,
+                _ => NoiseMode.None
+            }; 
+        }
+        else
+        {
+            noiseMode = sessionInfo.NoiseMode switch
+            {
+                "SingleTalker" => NoiseMode.SingleTalker,
+                "Environmental" => NoiseMode.Environmental,
+                _ => NoiseMode.None
+            }; 
+        }
 
         return noiseMode;
     }
@@ -86,6 +99,8 @@ public class GameController : MonoBehaviour
     
     [FoldoutGroup("Refs")] [SerializeField] private Button buttonA;
     [FoldoutGroup("Refs")] [SerializeField] private Button buttonB;
+    [FoldoutGroup("Refs")] [SerializeField] private InputActionReference speedUpInput;
+    [FoldoutGroup("Refs")] [SerializeField] private InputActionReference speedDownInput;
     [FoldoutGroup("Refs")] [SerializeField] private TextMeshProUGUI instructionText;
     [FoldoutGroup("Refs")] [SerializeField] private TextMeshProUGUI textA;
     [FoldoutGroup("Refs")] [SerializeField] private TextMeshProUGUI textB;
@@ -111,6 +126,9 @@ public class GameController : MonoBehaviour
         buttonB.onClick.AddListener(() => OnResponse("B"));
         
         startButton.onClick.AddListener(UserStart);
+        
+        speedUpInput.action.performed += _ => speed += 0.2f;
+        speedDownInput.action.performed += _ => speed -= 0.2f;
     }
     
     private TextFileHandler _fileHandler;
@@ -213,6 +231,8 @@ public class GameController : MonoBehaviour
         Debug.Log($"Response: {response}");
 
         bool isCorrect;
+        float responseTime = Time.time - GlobalInfo.StimuliPlayEndedTime;
+        Debug.Log($"Response time: {responseTime}");
 
 #if UNITY_EDITOR
         if (_isSwapped)
@@ -244,7 +264,7 @@ public class GameController : MonoBehaviour
             FloatEffect.Play(false);
         }
         
-        _fileHandler.WriteLine($"{_currentAnswer}, {isCorrect}");
+        _fileHandler.WriteLine($"{_currentAnswer}, {isCorrect}, {responseTime}");
         
         _isWaitForResponse = false;
 

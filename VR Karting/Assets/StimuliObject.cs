@@ -124,6 +124,7 @@ public class StimuliObject : MonoBehaviour
         word.volume = 0.63096f;
         word.Play();
         var duration = word.clip.length;
+        GlobalInfo.StimuliPlayEndedTime = Time.time + duration;
         Destroy(word.gameObject, duration);
         
         yield break;
@@ -161,6 +162,7 @@ public class StimuliObject : MonoBehaviour
         Observable.Timer(TimeSpan.FromSeconds(halfDuration)).Subscribe(_ =>
         {
             word.Play();
+            GlobalInfo.StimuliPlayEndedTime = Time.time + word.clip.length;
             Destroy(word.gameObject, word.clip.length);
         }).AddTo(word);
 

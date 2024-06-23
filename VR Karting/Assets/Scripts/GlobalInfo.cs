@@ -20,4 +20,6 @@ public static class GlobalInfo
             GameEvents.TriggerScoreUpdate(score);
         }
     }
+
+    public static float StimuliPlayEndedTime { get; set; }
 }

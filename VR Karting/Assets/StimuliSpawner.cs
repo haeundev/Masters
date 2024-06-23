@@ -50,50 +50,8 @@ public class StimuliSpawner : MonoBehaviour
     }
 
     [Button]
-    private void Spawn()
+    public void Spawn()
     {
-        // // split half, shuffle each half, then merge
-        // var originalList = stimuliSO.Values.ToList();
-        //
-        // // Split the list into two halves
-        // var halfIndex = originalList.Count / 2;
-        // var firstHalf = originalList.GetRange(0, halfIndex);
-        // var secondHalf = originalList.GetRange(halfIndex, originalList.Count - halfIndex);
-        //
-        // // Shuffle each half
-        // firstHalf.Shuffle();
-        // secondHalf.Shuffle();
-        //
-        // // Merge the shuffled halves
-        // var data = Extensions.MergeLists(firstHalf, secondHalf);
-        // var data = stimuliSO.Values.ToShuffleList();
-        //
-        // var index = 0;
-        //
-        // var initialDistance = totalDistance / 2; // 맵에 뒤에 더 추가해놓긴 했는데 그건 스페어로 사용.
-        // _eachDistance = initialDistance / (data.Count * pair);
-        //
-        // for (var i = 0; i < pair; i++)
-        // {
-        //     for (var j = 0; j < data.Count; j++)
-        //     {
-        //         var stimuli = Instantiate(stimuliPrefab, transform);
-        //         var parentPos = transform.position;
-        //         stimuli.transform.position = new Vector3(
-        //             parentPos.x + Random.Range(-randomX, randomX),
-        //             parentPos.y,
-        //             parentPos.z + index * _eachDistance);
-        //         
-        //         var isOddPair = i % 2 == 0;
-        //         var info = data[j];
-        //         stimuli.GetComponentInChildren<StimuliObject>().SetInfo(info, _sessionID, _speakerID, _noiseMode, isOddPair ? info.A : info.B);
-        //
-        //         _spawnedItems.Add(stimuli);
-        //         
-        //         index++;
-        //     }
-        // }
-        
         var data = stimuliSO.Values.ToShuffleList();
         var doubledData = new List<Stimuli>(data.Count * 2);
 
