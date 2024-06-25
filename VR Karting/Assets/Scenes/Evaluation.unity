@@ -1128,74 +1128,65 @@ MonoBehaviour:
   pair: 2
   evaluationStimuliSO: {fileID: 11400000, guid: 553b319459c246642abd4dbf0990d0bd,
     type: 2}
+  trainingStimuliSO: {fileID: 11400000, guid: d3a86ec2b389c474598da4417601642c, type: 2}
   sessionInfosAsset: {fileID: 11400000, guid: dccb5fa3fc8dbf549989fa5266bf3990, type: 2}
   icon: {fileID: 907379941}
   optionA: {fileID: 250979984}
   optionB: {fileID: 263334518}
-  trials:
+  isMiniTest: 1
+  evaluationTrials: []
+  miniTestTrials:
   - info:
-      Contrast: "\u026A vs. i\u02D0"
-      A: hid
-      B: heed
-    answer: hid
-  - info:
-      Contrast: "\u025B vs. \xE6"
-      A: head
-      B: had
-    answer: head
-  - info:
-      Contrast: "\u028C vs. \u0251"
-      A: hud
-      B: hod
-    answer: hud
-  - info:
+      ID: 25
       Contrast: "\u028A vs. u\u02D0"
-      A: hood
-      B: who'd
-    answer: hood
+      A: should
+      B: shooed
+    answer: should
   - info:
-      Contrast: "\u0254 vs. o\u028A"
-      A: bought
-      B: boat
-    answer: bought
-  - info:
-      Contrast: "e\u026A vs. \u026A"
-      A: bait
-      B: bit
-    answer: bait
-  - info:
-      Contrast: "\u026A vs. i\u02D0"
-      A: hid
-      B: heed
-    answer: heed
-  - info:
-      Contrast: "\u025B vs. \xE6"
-      A: head
-      B: had
-    answer: had
-  - info:
+      ID: 18
       Contrast: "\u028C vs. \u0251"
-      A: hud
-      B: hod
-    answer: hod
+      A: nut
+      B: not
+    answer: nut
   - info:
+      ID: 11
+      Contrast: "\u025B vs. \xE6"
+      A: set
+      B: sat
+    answer: sat
+  - info:
+      ID: 4
+      Contrast: "\u026A vs. i\u02D0"
+      A: list
+      B: least
+    answer: list
+  - info:
+      ID: 25
       Contrast: "\u028A vs. u\u02D0"
-      A: hood
-      B: who'd
-    answer: who'd
+      A: should
+      B: shooed
+    answer: shooed
   - info:
-      Contrast: "\u0254 vs. o\u028A"
-      A: bought
-      B: boat
-    answer: boat
+      ID: 18
+      Contrast: "\u028C vs. \u0251"
+      A: nut
+      B: not
+    answer: not
   - info:
-      Contrast: "e\u026A vs. \u026A"
-      A: bait
-      B: bit
-    answer: bit
-  participantID: 15
-  sessionID: 6
-  SpeakerID: F2
+      ID: 4
+      Contrast: "\u026A vs. i\u02D0"
+      A: list
+      B: least
+    answer: least
+  - info:
+      ID: 11
+      Contrast: "\u025B vs. \xE6"
+      A: set
+      B: sat
+    answer: set
+  participantID: 18
+  sessionID: 2
+  SpeakerID: M1
 --- !u!1 &2131278545
 GameObject:
   m_ObjectHideFlags: 0
