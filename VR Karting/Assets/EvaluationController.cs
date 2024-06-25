@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DataTables;
+using LiveLarson.Util;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -15,20 +16,30 @@ public class EvaluationTrial
     public string answer;
 }
 
+[Serializable]
+public class MiniTestTrial
+{
+    public Stimuli info;
+    public string answer;
+}
+
 public class EvaluationController : MonoBehaviour
 {
     [SerializeField] private int pair = 2;
     [SerializeField] private EvaluationStimulis evaluationStimuliSO;
+    [SerializeField] private Stimulis trainingStimuliSO;
     [SerializeField] private SessionInfos sessionInfosAsset;
 
     [SerializeField] private GameObject icon;
     
     [SerializeField] private Button optionA;
     [SerializeField] private Button optionB;
+    [SerializeField] private bool isMiniTest;
 
     private float _eachDistance;
     
-    [SerializeField] public List<EvaluationTrial> trials = new();
+    [SerializeField] public List<EvaluationTrial> evaluationTrials = new();
+    [SerializeField] public List<MiniTestTrial> miniTestTrials = new();
     
     [Title("Today's Session Info", "$CombinedSessionInfo")]
     [OnValueChanged("GetSessionInfo")]
@@ -70,56 +81,69 @@ public class EvaluationController : MonoBehaviour
     }
 
     private TextFileHandler _fileHandler;
-
-    private void Start()
-    {
-        var date = DateTime.Today.ToString("dd-MM-yyyy");
-        _fileHandler = new TextFileHandler(Application.persistentDataPath, $"Evaluation p{participantID} {SpeakerID} {date}.txt");
-    }
-
+    
     [Button]
     private void MakeTrialQueue()
     {
-        // // split half, shuffle each half, then merge
-        // var originalList = stimuliSO.Values.ToList();
-        //
-        // // Split the list into two halves
-        // var halfIndex = originalList.Count / 2;
-        // var firstHalf = originalList.GetRange(0, halfIndex);
-        // var secondHalf = originalList.GetRange(halfIndex, originalList.Count - halfIndex);
-        //
-        // // Shuffle each half
-        // firstHalf.Shuffle();
-        // secondHalf.Shuffle();
-        //
-        // // Merge the shuffled halves
-        // var data = Extensions.MergeLists(firstHalf, secondHalf);
-        var data = evaluationStimuliSO.Values;
-        var index = 0;
+        miniTestTrials.Clear();
+        evaluationTrials.Clear();
         
-        for (var i = 0; i < pair; i++)
+        if (isMiniTest)
         {
-            for (var j = 0; j < data.Count; j++)
+            var data = trainingStimuliSO.Values.Where(p => p.ID % 7 == (participantID % 7)).ToList();
+            var index = 0;
+            for (var i = 0; i < pair; i++)
             {
-                var isOddPair = i % 2 == 0;
-                var info = data[j];
-                
-                var evaluationTrial = new EvaluationTrial
+                for (var j = 0; j < data.Count; j++)
                 {
-                    info = info,
-                    answer = isOddPair ? info.A : info.B
-                };
+                    var isOddPair = i % 2 == 0;
+                    var info = data[j];
                 
-                trials.Add(evaluationTrial);
+                    var miniTestTrial = new MiniTestTrial()
+                    {
+                        info = info,
+                        answer = isOddPair ? info.A : info.B
+                    };
                 
-                index++;
+                    miniTestTrials.Add(miniTestTrial);
+                
+                    index++;
+                }
             }
+            
+            miniTestTrials.Shuffle();
+        }
+        else
+        {
+            var data = evaluationStimuliSO.Values;
+            var index = 0;
+            for (var i = 0; i < pair; i++)
+            {
+                for (var j = 0; j < data.Count; j++)
+                {
+                    var isOddPair = i % 2 == 0;
+                    var info = data[j];
+                
+                    var evaluationTrial = new EvaluationTrial
+                    {
+                        info = info,
+                        answer = isOddPair ? info.A : info.B
+                    };
+                
+                    evaluationTrials.Add(evaluationTrial);
+                
+                    index++;
+                }
+            }
+            
+            evaluationTrials.Shuffle();
         }
     }
     
     private void ClearTrials()
     {
-        trials.Clear();
+        evaluationTrials.Clear();
+        miniTestTrials.Clear();
     }
     
     [Button]
@@ -128,20 +152,86 @@ public class EvaluationController : MonoBehaviour
         ClearTrials();
         MakeTrialQueue();
         
-        StartCoroutine(RunTrials());
+        var date = DateTime.Today.ToString("dd-MM-yyyy");
+        if (isMiniTest)
+        {
+            _fileHandler = new TextFileHandler(Application.persistentDataPath, $"MiniTest p{participantID} {SpeakerID} {date}.txt");
+            StartCoroutine(RunMiniTestTrials());
+        }
+        else
+        {
+            _fileHandler = new TextFileHandler(Application.persistentDataPath, $"Evaluation p{participantID} {SpeakerID} {date}.txt");
+            StartCoroutine(RunEvaluationTrials());
+        }
     }
 
     private string _answer;
     
-    private IEnumerator RunTrials()
+    private IEnumerator RunMiniTestTrials()
     {
-        foreach (var trial in trials)
+        foreach (var trial in miniTestTrials)
         {
             // hide options
             optionA.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
             optionB.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
             optionA.gameObject.SetActive(false);
             optionB.gameObject.SetActive(false);
+            
+            icon.SetActive(true);
+
+            yield return new WaitForSeconds(2f);
+            
+            var word = new GameObject("Word").AddComponent<AudioSource>();
+            word.clip = Resources.Load<AudioClip>($"Audio/Words/Target/{SpeakerID}/{trial.answer}");
+            word.Play();
+            word.spatialize = false;
+            
+            _answer = string.Empty;
+            
+            yield return new WaitForSeconds(word.clip.length);
+            
+            icon.SetActive(false);
+            Destroy(word.gameObject);
+            
+            // show options
+            optionA.GetComponentInChildren<TextMeshProUGUI>().text = trial.info.A;
+            optionB.GetComponentInChildren<TextMeshProUGUI>().text = trial.info.B;
+            optionA.gameObject.SetActive(true);
+            optionB.gameObject.SetActive(true);
+            
+            // shuffle options position
+            var rnd = new System.Random();
+            var isSwapped = rnd.Next(0, 2) == 0;
+            if (isSwapped)
+                (optionA.transform.position, optionB.transform.position) = (optionB.transform.position, optionA.transform.position);
+            
+            yield return new WaitUntil(() => _answer != string.Empty);
+            
+            var isCorrect = _answer == trial.answer;
+            _fileHandler.WriteLine($"{trial.answer}, {isCorrect}");
+
+            Debug.Log($"Answer: {_answer}, Correct?: {isCorrect}");
+        }
+
+        yield return new WaitForSeconds(1f);
+        OnFinished();
+    }
+    
+    private IEnumerator RunEvaluationTrials()
+    {
+        foreach (var trial in evaluationTrials)
+        {
+            // hide options
+            optionA.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+            optionB.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+            optionA.gameObject.SetActive(false);
+            optionB.gameObject.SetActive(false);
+            
+            // shuffle options position
+            var rnd = new System.Random();
+            var isSwapped = rnd.Next(0, 2) == 0;
+            if (isSwapped)
+                (optionA.transform.position, optionB.transform.position) = (optionB.transform.position, optionA.transform.position);
             
             icon.SetActive(true);
 
@@ -172,8 +262,18 @@ public class EvaluationController : MonoBehaviour
 
             Debug.Log($"Answer: {_answer}, Correct?: {isCorrect}");
         }
+        
+        yield return new WaitForSeconds(1f);
+        OnFinished();
     }
-    
+
+    private void OnFinished()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+
     private void OnApplicationQuit()
     {
         _fileHandler.CloseFile();
