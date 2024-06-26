@@ -55,12 +55,14 @@ public class StimuliSpawner : MonoBehaviour
         var data = stimuliSO.Values.ToShuffleList();
         var doubledData = new List<Stimuli>(data.Count * 2);
 
-        // Double the list
+        // Double the list * 2 times
+        doubledData.AddRange(data);
+        doubledData.AddRange(data);
         doubledData.AddRange(data);
         doubledData.AddRange(data);
 
         // Shuffle the doubled list
-        doubledData = doubledData.OrderBy(x => Random.value).ToList();
+        doubledData.Shuffle();
 
         var index = 0;
         var initialDistance = totalDistance / 2; // 맵에 뒤에 더 추가해놓긴 했는데 그건 스페어로 사용.

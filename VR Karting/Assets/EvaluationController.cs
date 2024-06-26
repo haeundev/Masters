@@ -13,6 +13,7 @@ using UnityEngine.UI;
 public class EvaluationTrial
 {
     public EvaluationStimuli info;
+    public string speakerID;
     public string answer;
 }
 
@@ -80,6 +81,11 @@ public class EvaluationController : MonoBehaviour
         icon.SetActive(false);
     }
 
+    private void Start()
+    {
+        StartEvaluation();
+    }
+
     private TextFileHandler _fileHandler;
     
     [Button]
@@ -117,22 +123,28 @@ public class EvaluationController : MonoBehaviour
         {
             var data = evaluationStimuliSO.Values;
             var index = 0;
-            for (var i = 0; i < pair; i++)
+            var novelSpeakerIDs = new List<string>() { "M3", "F4"};
+            
+            foreach (var speaker in novelSpeakerIDs)
             {
-                for (var j = 0; j < data.Count; j++)
+                for (var i = 0; i < pair; i++)
                 {
-                    var isOddPair = i % 2 == 0;
-                    var info = data[j];
-                
-                    var evaluationTrial = new EvaluationTrial
+                    for (var j = 0; j < data.Count; j++)
                     {
-                        info = info,
-                        answer = isOddPair ? info.A : info.B
-                    };
+                        var isOddPair = i % 2 == 0;
+                        var info = data[j];
                 
-                    evaluationTrials.Add(evaluationTrial);
+                        var evaluationTrial = new EvaluationTrial
+                        {
+                            info = info,
+                            speakerID = speaker,
+                            answer = isOddPair ? info.A : info.B
+                        };
                 
-                    index++;
+                        evaluationTrials.Add(evaluationTrial);
+
+                        index++;
+                    }
                 }
             }
             
@@ -216,7 +228,7 @@ public class EvaluationController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         OnFinished();
     }
-    
+
     private IEnumerator RunEvaluationTrials()
     {
         foreach (var trial in evaluationTrials)
@@ -226,41 +238,42 @@ public class EvaluationController : MonoBehaviour
             optionB.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
             optionA.gameObject.SetActive(false);
             optionB.gameObject.SetActive(false);
-            
+
             // shuffle options position
             var rnd = new System.Random();
             var isSwapped = rnd.Next(0, 2) == 0;
             if (isSwapped)
-                (optionA.transform.position, optionB.transform.position) = (optionB.transform.position, optionA.transform.position);
-            
+                (optionA.transform.position, optionB.transform.position) =
+                    (optionB.transform.position, optionA.transform.position);
+
             icon.SetActive(true);
 
             yield return new WaitForSeconds(2f);
-            
+
             var word = new GameObject("Word").AddComponent<AudioSource>();
-            word.clip = Resources.Load<AudioClip>($"Audio/Words/Evaluation/{SpeakerID}/{trial.answer}");
+            word.clip = Resources.Load<AudioClip>($"Audio/Words/Evaluation/{trial.speakerID}/{trial.answer}");
             word.Play();
             word.spatialize = false;
-            
+
             _answer = string.Empty;
-            
+
             yield return new WaitForSeconds(word.clip.length);
-            
+
             icon.SetActive(false);
             Destroy(word.gameObject);
-            
+
             // show options
             optionA.GetComponentInChildren<TextMeshProUGUI>().text = trial.info.A;
             optionB.GetComponentInChildren<TextMeshProUGUI>().text = trial.info.B;
             optionA.gameObject.SetActive(true);
             optionB.gameObject.SetActive(true);
-            
+
             yield return new WaitUntil(() => _answer != string.Empty);
-            
+
             var isCorrect = _answer == trial.answer;
             _fileHandler.WriteLine($"{trial.answer}, {isCorrect}");
 
-            Debug.Log($"Answer: {_answer}, Correct?: {isCorrect}");
+            // Debug.Log($"Answer: {_answer}, Correct?: {isCorrect}");
         }
         
         yield return new WaitForSeconds(1f);

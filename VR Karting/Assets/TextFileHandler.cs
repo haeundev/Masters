@@ -48,6 +48,6 @@ public class TextFileHandler
         Debug.Log($"Saved to {_filePath}");
 
         // open the file
-        System.Diagnostics.Process.Start(_filePath);
+        // System.Diagnostics.Process.Start(_filePath);
     }
 }
