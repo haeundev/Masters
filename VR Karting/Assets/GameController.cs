@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
 
     private NoiseMode GetTodaysNoise()
     {
-        if (sessionID <= 4)
+        if (sessionID >= 5)
         {
             noiseMode = sessionInfo.NoiseMode switch
             {
