@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public class FoodScoreUI : MonoBehaviour
 {
     [SerializeField] private TMPro.TextMeshProUGUI scoreText;
+    
+    private TextFileHandler _fileHandler;
     
     private void Awake()
     {
@@ -23,6 +26,14 @@ public class FoodScoreUI : MonoBehaviour
     private void UpdateScore(int score)
     {
         scoreText.text = $"{score} / 56";
+    }
+
+    private void OnApplicationQuit()
+    {
+        var date = DateTime.Now.ToString("yyyy-MM-dd HH-mm");
+        _fileHandler = new TextFileHandler(Application.persistentDataPath, $"Drive Score {date}.txt");
+        _fileHandler.WriteLine(scoreText.text);
+        _fileHandler.CloseFile();
     }
 
     private void OnDestroy()
