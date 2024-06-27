@@ -96,7 +96,7 @@ public class EvaluationController : MonoBehaviour
         
         if (isMiniTest)
         {
-            var data = trainingStimuliSO.Values.Where(p => p.ID % 7 == (participantID % 7)).ToList();
+            var data = trainingStimuliSO.Values.Where(p => p.ID % 7 == (participantID + sessionID - 1) % 7).ToList();
             var index = 0;
             for (var i = 0; i < pair; i++)
             {
@@ -301,7 +301,7 @@ public class EvaluationController : MonoBehaviour
                 yield return new WaitUntil(() => _answer != string.Empty);
 
                 var isCorrect = _answer == trial.answer;
-                _fileHandler.WriteLine($"{trial.answer}, {isCorrect}");
+                _fileHandler.WriteLine($"{trial.answer}, {isCorrect}, {pathPrefix.Replace("Audio/Words/Evaluation/", "")}");
 
                 // Debug.Log($"Answer: {_answer}, Correct?: {isCorrect}");
             }
