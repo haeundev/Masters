@@ -55,9 +55,7 @@ public class StimuliSpawner : MonoBehaviour
         var data = stimuliSO.Values.ToShuffleList();
         var doubledData = new List<Stimuli>(data.Count * 2);
 
-        // Double the list * 2 times
-        doubledData.AddRange(data);
-        doubledData.AddRange(data);
+        // Double the list
         doubledData.AddRange(data);
         doubledData.AddRange(data);
 

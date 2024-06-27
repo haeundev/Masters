@@ -1133,7 +1133,7 @@ MonoBehaviour:
   icon: {fileID: 907379941}
   optionA: {fileID: 250979984}
   optionB: {fileID: 263334518}
-  isMiniTest: 1
+  isMiniTest: 0
   evaluationTrials: []
   miniTestTrials:
   - info:
@@ -1184,9 +1184,9 @@ MonoBehaviour:
       A: set
       B: sat
     answer: set
-  participantID: 9
-  sessionID: 1
-  SpeakerID: M1
+  participantID: 5
+  sessionID: 2
+  SpeakerID: F1
 --- !u!1 &2131278545
 GameObject:
   m_ObjectHideFlags: 0

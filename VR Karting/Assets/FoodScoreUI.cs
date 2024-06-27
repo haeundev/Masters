@@ -12,7 +12,7 @@ public class FoodScoreUI : MonoBehaviour
 
     private void OnUserStarted()
     {
-        scoreText.text = "0 / 112";
+        scoreText.text = "0 / 56";
     }
 
     private void Start()
@@ -22,7 +22,7 @@ public class FoodScoreUI : MonoBehaviour
 
     private void UpdateScore(int score)
     {
-        scoreText.text = $"{score} / 112";
+        scoreText.text = $"{score} / 56";
     }
 
     private void OnDestroy()

@@ -191,7 +191,7 @@ public class EvaluationController : MonoBehaviour
             
             icon.SetActive(true);
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.2f);
             
             var word = new GameObject("Word").AddComponent<AudioSource>();
             word.clip = Resources.Load<AudioClip>($"Audio/Words/Target/{SpeakerID}/{trial.answer}");
@@ -231,51 +231,82 @@ public class EvaluationController : MonoBehaviour
 
     private IEnumerator RunEvaluationTrials()
     {
-        foreach (var trial in evaluationTrials)
+        var pathPrefixes = new List<string>()
         {
-            // hide options
-            optionA.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
-            optionB.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
-            optionA.gameObject.SetActive(false);
-            optionB.gameObject.SetActive(false);
-
-            // shuffle options position
-            var rnd = new System.Random();
-            var isSwapped = rnd.Next(0, 2) == 0;
-            if (isSwapped)
-                (optionA.transform.position, optionB.transform.position) =
-                    (optionB.transform.position, optionA.transform.position);
-
-            icon.SetActive(true);
-
-            yield return new WaitForSeconds(2f);
-
-            var word = new GameObject("Word").AddComponent<AudioSource>();
-            word.clip = Resources.Load<AudioClip>($"Audio/Words/Evaluation/{trial.speakerID}/{trial.answer}");
-            word.Play();
-            word.spatialize = false;
-
-            _answer = string.Empty;
-
-            yield return new WaitForSeconds(word.clip.length);
-
-            icon.SetActive(false);
-            Destroy(word.gameObject);
-
-            // show options
-            optionA.GetComponentInChildren<TextMeshProUGUI>().text = trial.info.A;
-            optionB.GetComponentInChildren<TextMeshProUGUI>().text = trial.info.B;
-            optionA.gameObject.SetActive(true);
-            optionB.gameObject.SetActive(true);
-
-            yield return new WaitUntil(() => _answer != string.Empty);
-
-            var isCorrect = _answer == trial.answer;
-            _fileHandler.WriteLine($"{trial.answer}, {isCorrect}");
-
-            // Debug.Log($"Answer: {_answer}, Correct?: {isCorrect}");
-        }
+            $"Audio/Words/Evaluation/PinkNoise",
+            $"Audio/Words/Evaluation/SingleTalker",
+            $"Audio/Words/Evaluation/Clear",
+        };
         
+        if (participantID % 2 == 0)
+            (pathPrefixes[0], pathPrefixes[1]) = (pathPrefixes[1], pathPrefixes[0]);
+
+        var filePrefixes = new List<string>()
+        {
+            $"PinkNoise_SNR_-4_dB_",
+            $"SingleTalker_SNR_-4_dB_",
+            $"",
+        };
+        
+        if (participantID % 2 == 0)
+            (filePrefixes[0], filePrefixes[1]) = (filePrefixes[1], filePrefixes[0]);
+
+        for (var i = 0; i < pathPrefixes.Count; i++)
+        {
+            var pathPrefix = pathPrefixes[i];
+            foreach (var trial in evaluationTrials)
+            {
+                // hide options
+                optionA.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+                optionB.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+                optionA.gameObject.SetActive(false);
+                optionB.gameObject.SetActive(false);
+
+                // shuffle options position
+                var rnd = new System.Random();
+                var isSwapped = rnd.Next(0, 2) == 0;
+                if (isSwapped)
+                    (optionA.transform.position, optionB.transform.position) =
+                        (optionB.transform.position, optionA.transform.position);
+
+                icon.SetActive(true);
+
+                yield return new WaitForSeconds(1.2f);
+
+                var word = new GameObject("Word").AddComponent<AudioSource>();
+                var path = $"{pathPrefix}/{trial.speakerID}/{filePrefixes[i]}{trial.answer}";
+                word.clip = Resources.Load<AudioClip>(path);
+
+                if (word.clip == null)
+                {
+                    Debug.LogError($"Failed to load at: {path}");
+                }
+                
+                word.Play();
+                word.spatialize = false;
+
+                _answer = string.Empty;
+
+                yield return new WaitForSeconds(word.clip.length);
+
+                icon.SetActive(false);
+                Destroy(word.gameObject);
+
+                // show options
+                optionA.GetComponentInChildren<TextMeshProUGUI>().text = trial.info.A;
+                optionB.GetComponentInChildren<TextMeshProUGUI>().text = trial.info.B;
+                optionA.gameObject.SetActive(true);
+                optionB.gameObject.SetActive(true);
+
+                yield return new WaitUntil(() => _answer != string.Empty);
+
+                var isCorrect = _answer == trial.answer;
+                _fileHandler.WriteLine($"{trial.answer}, {isCorrect}");
+
+                // Debug.Log($"Answer: {_answer}, Correct?: {isCorrect}");
+            }
+        }
+
         yield return new WaitForSeconds(1f);
         OnFinished();
     }
