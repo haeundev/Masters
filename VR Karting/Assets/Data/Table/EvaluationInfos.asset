@@ -1,0 +1,483 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28ea89709be3444ca31d547f2ee9dd3, type: 3}
+  m_Name: EvaluationInfos
+  m_EditorClassIdentifier: 
+  Values:
+  - ParticipantID: 1
+    PreBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+    MidBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+    PostBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+  - ParticipantID: 2
+    PreBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+    MidBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+    PostBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+  - ParticipantID: 3
+    PreBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+    MidBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+    PostBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+  - ParticipantID: 4
+    PreBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+    MidBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+    PostBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+  - ParticipantID: 5
+    PreBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+    MidBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+    PostBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+  - ParticipantID: 6
+    PreBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+    MidBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+    PostBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+  - ParticipantID: 7
+    PreBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+    MidBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+    PostBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+  - ParticipantID: 8
+    PreBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+    MidBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+    PostBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+  - ParticipantID: 9
+    PreBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+    MidBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+    PostBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+  - ParticipantID: 10
+    PreBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+    MidBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+    PostBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+  - ParticipantID: 11
+    PreBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+    MidBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+    PostBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+  - ParticipantID: 12
+    PreBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+    MidBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+    PostBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+  - ParticipantID: 13
+    PreBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+    MidBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+    PostBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+  - ParticipantID: 14
+    PreBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+    MidBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+    PostBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+  - ParticipantID: 15
+    PreBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+    MidBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+    PostBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+  - ParticipantID: 16
+    PreBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+    MidBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+    PostBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+  - ParticipantID: 17
+    PreBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+    MidBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+    PostBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+  - ParticipantID: 18
+    PreBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+    MidBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+    PostBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+  - ParticipantID: 19
+    PreBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+    MidBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+    PostBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+  - ParticipantID: 20
+    PreBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+    MidBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+    PostBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+  - ParticipantID: 21
+    PreBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+    MidBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+    PostBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+  - ParticipantID: 22
+    PreBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+    MidBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+    PostBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+  - ParticipantID: 23
+    PreBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+    MidBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+    PostBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+  - ParticipantID: 24
+    PreBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+    MidBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+    PostBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+  - ParticipantID: 25
+    PreBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+    MidBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+    PostBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+  - ParticipantID: 26
+    PreBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+    MidBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+    PostBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+  - ParticipantID: 27
+    PreBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+    MidBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+    PostBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+  - ParticipantID: 28
+    PreBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+    MidBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+    PostBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+  - ParticipantID: 29
+    PreBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+    MidBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+    PostBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+  - ParticipantID: 30
+    PreBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+    MidBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+    PostBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+  - ParticipantID: 31
+    PreBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+    MidBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+    PostBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+  - ParticipantID: 32
+    PreBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+    MidBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+    PostBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+  - ParticipantID: 33
+    PreBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+    MidBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+    PostBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+  - ParticipantID: 34
+    PreBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+    MidBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
+    PostBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+  - ParticipantID: 35
+    PreBlocks:
+    - PinkNoise
+    - Clear
+    - SingleTalker
+    MidBlocks:
+    - Clear
+    - PinkNoise
+    - SingleTalker
+    PostBlocks:
+    - SingleTalker
+    - Clear
+    - PinkNoise
+  - ParticipantID: 36
+    PreBlocks:
+    - PinkNoise
+    - SingleTalker
+    - Clear
+    MidBlocks:
+    - Clear
+    - SingleTalker
+    - PinkNoise
+    PostBlocks:
+    - SingleTalker
+    - PinkNoise
+    - Clear
