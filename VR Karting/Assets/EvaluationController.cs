@@ -182,6 +182,9 @@ public class EvaluationController : MonoBehaviour
         MakeTrialQueue();
         
         var date = DateTime.Today.ToString("dd-MM-yyyy");
+        
+        remainingText.gameObject.SetActive(!isMiniTest);
+        
         if (isMiniTest)
         {
             _fileHandler = new TextFileHandler(Application.persistentDataPath, $"MiniTest p{participantID} {SpeakerID} {date}.txt");
