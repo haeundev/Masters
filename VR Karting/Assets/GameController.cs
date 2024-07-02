@@ -313,8 +313,14 @@ public class GameController : MonoBehaviour
 
     private void MoveTowardsTarget()
     {
-        if (_stimuli.Count == 0 || _isEnded)
+        if (_isEnded)
+        {
+            // smoothly rotate to zero
+            kartTransform.rotation = Quaternion.Slerp(kartTransform.rotation, Quaternion.identity, Time.deltaTime * 2f);
+            // move forward
+            kartTransform.position += kartTransform.forward * Time.deltaTime * speed;
             return;
+        }
         
         // check index
         if (_currentTargetIndex >= _stimuli.Count)
@@ -362,6 +368,7 @@ public class GameController : MonoBehaviour
         
         if (_currentTargetIndex >= _stimuli.Count)
         {
+            Debug.Log("Target reached. Game ended.");
             _isEnded = true;
             return;
         }
