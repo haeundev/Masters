@@ -80,6 +80,8 @@ public class GameController : MonoBehaviour
         GetTodaysNoise();
     }
     
+    public int ParticipantID => participantID;
+    
     [HideInInspector] public SessionInfo sessionInfo;
     [HideInInspector] public string SpeakerID;
     [HideInInspector] public bool IsWeek2;

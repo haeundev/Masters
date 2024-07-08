@@ -7,6 +7,8 @@ public class FoodScoreUI : MonoBehaviour
     
     private TextFileHandler _fileHandler;
     
+    private GameController _gameController;
+    
     private void Awake()
     {
         GameEvents.OnUserStarted += OnUserStarted;
@@ -20,6 +22,8 @@ public class FoodScoreUI : MonoBehaviour
 
     private void Start()
     {
+        _gameController = FindObjectOfType<GameController>();
+        
         scoreText.text = "Ready to shop?";
     }
 
@@ -31,7 +35,7 @@ public class FoodScoreUI : MonoBehaviour
     private void OnApplicationQuit()
     {
         var date = DateTime.Now.ToString("yyyy-MM-dd HH-mm");
-        _fileHandler = new TextFileHandler(Application.persistentDataPath, $"Drive Score {date}.txt");
+        _fileHandler = new TextFileHandler(Application.persistentDataPath, $"Drive Score p{_gameController.ParticipantID} {date}.txt");
         _fileHandler.WriteLine(scoreText.text);
         _fileHandler.CloseFile();
     }

@@ -1325,9 +1325,9 @@ MonoBehaviour:
       A: set
       B: sat
     answer: set
-  participantID: 3
-  sessionID: 2
-  SpeakerID: F2
+  participantID: 12
+  sessionID: 5
+  SpeakerID: F1
 --- !u!1 &2131278545
 GameObject:
   m_ObjectHideFlags: 0
