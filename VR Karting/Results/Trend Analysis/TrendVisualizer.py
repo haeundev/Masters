@@ -5,8 +5,14 @@ import seaborn as sns
 from scipy.stats import linregress
 
 def analyze_and_plot(df, dataset_name):
+    # Select only the numeric columns for analysis, excluding the first two columns
+    numeric_df = df.iloc[:, 2:]
+
+    # Convert relevant columns to numeric, forcing errors to NaN
+    numeric_df = numeric_df.apply(pd.to_numeric, errors='coerce')
+
     # Melting the DataFrame for easier plotting
-    df_melted = df.reset_index().melt(id_vars=["Participant"], var_name="Session", value_name="Score")
+    df_melted = numeric_df.reset_index().melt(id_vars=["Participant"], var_name="Session", value_name="Score")
 
     # Plotting the data for each participant
     plt.figure(figsize=(12, 8))
@@ -24,7 +30,7 @@ def analyze_and_plot(df, dataset_name):
     plot.get_figure().savefig(f'{file_name}.png')
 
     # Calculate average scores per session
-    average_scores = df.mean()
+    average_scores = numeric_df.mean()
 
     # Linear regression on the average scores
     sessions = np.arange(1, len(average_scores) + 1)
