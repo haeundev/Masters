@@ -242,7 +242,7 @@ public class EvaluationController : MonoBehaviour
             var isCorrect = _answer == trial.answer;
             _fileHandler.WriteLine($"{trial.answer}, {isCorrect}");
 
-            Debug.Log($"Answer: {_answer}, Correct?: {isCorrect}");
+            //Debug.Log($"Answer: {_answer}, Correct?: {isCorrect}");
         }
 
         yield return new WaitForSeconds(1f);
