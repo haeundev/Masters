@@ -1,72 +1,46 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from scipy.stats import linregress
 
-def analyze_and_plot(df, dataset_name):
-    # Select only the numeric columns for analysis, excluding the first two columns
-    numeric_df = df.iloc[:, 2:]
+# Load the data from an Excel file
+df = pd.read_excel('TrendData.xlsx')
 
-    # Convert relevant columns to numeric, forcing errors to NaN
-    numeric_df = numeric_df.apply(pd.to_numeric, errors='coerce')
+# Set a larger color palette using seaborn's color_palette function
+# You can change "tab20" to any other seaborn palette or define your own list of colors
+colors = sns.color_palette("tab20", n_colors=df['ParticipantID'].nunique())
 
-    # Melting the DataFrame for easier plotting
-    df_melted = numeric_df.reset_index().melt(id_vars=["Participant"], var_name="Session", value_name="Score")
+# Plot each group's participant score trends in separate figures and save them
+group_colors = {}  # To store unique colors per group
+for (group, sub_df) in df.groupby('Group'):
+    fig, ax = plt.subplots(figsize=(12, 6))  # Adjust figure size as needed
+    color_index = 0  # Reset color index for each group
+    for _, row in sub_df.iterrows():
+        # Ensure each participant has a unique color
+        if group not in group_colors:
+            group_colors[group] = {}
+        if row['ParticipantID'] not in group_colors[group]:
+            group_colors[group][row['ParticipantID']] = colors[color_index]
+            color_index += 1
 
-    # Plotting the data for each participant
-    plt.figure(figsize=(12, 8))
-    plot = sns.lineplot(data=df_melted, x="Session", y="Score", hue="Participant", marker="o", palette="tab10")
-    plt.title(f"Scores Across Training Sessions by Participant - {dataset_name}")
-    plt.xlabel("Training Session")
-    plt.ylabel("Score")
-    plt.legend(title="Participant ID", bbox_to_anchor=(1.05, 1), loc='upper left')
-    plt.grid(True)
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.show()
-    # Save the plot as a png file
-    file_name = f'scores_by_participant_{dataset_name.replace(" ", "_")}'
-    plot.get_figure().savefig(f'{file_name}.png')
-
-    # Calculate average scores per session
-    average_scores = numeric_df.mean()
-
-    # Linear regression on the average scores
-    sessions = np.arange(1, len(average_scores) + 1)
-    slope, intercept, r_value, p_value, std_err = linregress(sessions, average_scores)
-
-    # Plotting average scores with trend line
-    plt.figure(figsize=(8, 5))
-    plot = sns.lineplot(x=sessions, y=average_scores, marker="o", label="Average Scores")
-    plt.plot(sessions, intercept + slope * sessions, 'r', label=f'Trend Line (slope={slope:.2f})')
-    plt.title("Average Scores Across Sessions with Trend Line")
-    plt.xlabel("Session Number")
-    plt.ylabel("Average Score")
-    plt.legend()
-    plt.text(0.5, 0.9, f'P-value: {p_value:.4f}\nR-squared: {r_value**2:.4f}',
-             ha='center', va='center', transform=plt.gca().transAxes, fontsize=12)
-    plt.grid(True)
-    plt.tight_layout()
+        ax.plot(range(1, 9), row[['Session 1', 'Session 2', 'Session 3', 'Session 4',
+                                  'Session 5', 'Session 6', 'Session 7', 'Session 8']],
+                marker='o', label=f"ID {row['ParticipantID']}", color=group_colors[group][row['ParticipantID']])
+    ax.set_title(f'Participant Score Trend in {group}')
+    ax.set_xlabel('Sessions')
+    ax.set_ylabel('Scores')
+    ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.tight_layout()  # Adjust layout to make room for legend
+    plt.savefig(f'{group}_Scores_Trend.png', dpi=300,
+                bbox_inches='tight')  # Save with bounding box tightly around the figure
     plt.show()
 
-    # Save the plot as a png file
-    file_name = f'average_scores_{dataset_name.replace(" ", "_")}'
-    plot.get_figure().savefig(f'{file_name}.png')
-
-    # Print regression results
-    print(f"Slope: {slope:.2f}")
-    print(f"Intercept: {intercept:.2f}")
-    print(f"P-value: {p_value:.4f}")
-    print(f"R-squared: {r_value**2:.4f}")
-
-# Reading data from Excel
-excel_file = 'TrendData.xlsx'
-data1 = pd.read_excel(excel_file, sheet_name='Training', index_col='Participant')
-data2 = pd.read_excel(excel_file, sheet_name='Evaluation', index_col='Participant')
-
-print("Analysis for Dataset 1 (Training):")
-analyze_and_plot(data1, "Training")
-
-print("Analysis for Dataset 2 (Evaluation):")
-analyze_and_plot(data2, "Evaluation")
+# Plot average scores for each group across sessions and save it
+fig, ax = plt.subplots(figsize=(12, 6))
+for idx, (group, sub_df) in enumerate(df.groupby('Group')):
+    session_means = sub_df[[f"Session {i}" for i in range(1, 9)]].mean()
+    # Use distinct colors for each group in the average plot
+    ax.plot(range(1, 9), session_means, marker='o', label=f"{group}", color=colors[idx])
+ax.set_title('Average Group Scores Across Sessions')
+ax.set_xlabel('Sessions')
+ax.set_ylabel('Average Score')
+ax
