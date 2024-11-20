@@ -26,8 +26,8 @@ plt.figure(figsize=(10, 6))
 # Define line styles and markers for each group
 group_styles = {
     'Control': {'color': 'lightseagreen', 'linestyle': '-', 'marker': 'o'},
-    'DriveOnly': {'color': 'orange', 'linestyle': '--', 'marker': '^'},
-    'NoiseDrive': {'color': 'slateblue', 'linestyle': '-.', 'marker': 's'}
+    'DO': {'color': 'orange', 'linestyle': '--', 'marker': '^'},
+    'DN': {'color': 'slateblue', 'linestyle': '-.', 'marker': 's'}
 }
 
 # Plot each group with error bars for each session
